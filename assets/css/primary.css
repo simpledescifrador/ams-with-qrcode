@@ -1,0 +1,66 @@
+body {
+  background: url(../images/apple_book.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+} 
+
+
+.para-title{
+	font-family: "Times New Roman", Times, serif;
+	margin-top: -23px;
+	text-align: center;
+	color: #000000;
+	font-size: 26px;
+	font-style: bold;
+}
+
+.para-subtitle{
+	font-family: "Times New Roman", Times, serif;
+	margin-top: -25px;
+	text-align: center;
+	color: #808080;
+	font-size: 18px;
+	font-style: bold;
+}
+
+.form-container-li{
+	background: #FFFFFF;
+	border: 0px solid #000;
+	padding-bottom: 50px;
+	padding-top: 20px;
+	padding-left: 60px;
+	padding-right: 60px;
+	margin-top: 15vh;
+	margin-right: 20px;
+	margin-left: 20px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 82px 4px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 82px 4px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 82px 4px rgba(0,0,0,0.75);
+}
+
+hr.line-title{
+	margin-top: -18px;
+	border-top:: 2px;
+	border-top-color: #000;
+	width: 180px;
+}
+
+.black-text{
+	color: #000;
+}
+
+.center-text{
+	margin-bottom: -15px;
+	display: block;
+    text-align: center;
+	size: 18px;
+}
+
+.btn-gradient{
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.2) 49%, rgba(0,0,0,0.15) 51%, rgba(0,0,0,0.05));
+    background-repeat: repeat-x;
+    margin-top: 10px;
+}
