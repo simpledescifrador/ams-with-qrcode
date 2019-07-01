@@ -98,4 +98,17 @@ class School_year_model extends CI_Model {
     }
 
         /* --------------- CUSTOM MODEL FUNCTION STARTS HERE ------------------ */
+
+
+        function sy_exist($school_year)
+        {
+            $this->db->select('*');
+            $this->db->from('tbl_school_year');
+            $this->db->where('school_year', $school_year);
+            $this->db->limit(1);
+            
+            $query = $this->db->get();
+
+            return $query->num_rows() == 1? $query->row_array() : false;
+        }
 }

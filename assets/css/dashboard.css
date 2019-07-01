@@ -89,6 +89,12 @@ body{
 
 }
 
+.success-btn {
+  background-color: #34db4a !important;
+  border-color: #34db4a !important;
+  color: #FFFFFF !important;
+}
+
 .size-btn{
   font-size: 12px;
 }

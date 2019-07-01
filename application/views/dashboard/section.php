@@ -1,5 +1,5 @@
  <!-- Navgation Bar -->
-        <nav class="navbar navbar-default">
+ <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -93,9 +93,9 @@
                         </div>
                         <div> 
                             <div class="col-md-12">
-                                <a href="#" class="list-group-item active main-color-bg">
+                                <a href="#" class="list-group-item active success-btn" data-toggle="modal"  data-target="#add-section-modal">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                     Add Sections
+                                     Add Section
                             </a>
                             </div>
                         </div>
@@ -108,6 +108,9 @@
                                 <h3 class="panel-title">List of Sections</h3>
                             </div>
                             <div class="panel-body">
+                                 <div class="form-group">
+                                    <input type="text" class="form-control" id="filter" placeholder="Search">
+                                </div>
                                 <table class="table table-striped table-hover">
                                     <tr>
                                         <th>Code</th>

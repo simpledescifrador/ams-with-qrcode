@@ -26,5 +26,11 @@ $route['change-password'] = 'web/authentication/change_password';
 $route['dashboard'] = 'web/dashboard/page';
 $route['dashboard/(:any)'] = 'web/dashboard/page/$1';
 
+//Section Controller Routes
+$route['sections/new'] = 'web/section/new_section';
+
+//Student Controller Routes
+$route['students/new'] = 'web/student/new_student';
+
 /* END OF API ROUTES */
 
