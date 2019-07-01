@@ -39,7 +39,7 @@
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true">  <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="" data-toggle="modal"  data-target="#edit-informatoin-modal">Edit Inforation</a></li>
+                                <!-- <li><a href="" data-toggle="modal"  data-target="#edit-informatoin-modal">Edit Inforation</a></li> -->
                                 <li><a href="" data-toggle="modal"  data-target="#password-change-modal">Change Password</a></li>
                                 <li><a href="<?php echo site_url('logout'); ?>">Logout</a></li>
                             </ul>

@@ -9,7 +9,7 @@ class Dashboard extends CI_Controller{
 
             //Load Login View
             $data['title'] = ucfirst($slug .' | Attendance Monitoring System');
-            $data['username'] = "Admin";
+            $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
             
             $slug = $slug == 'dashboard' ? 'home' : $slug;
 

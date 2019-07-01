@@ -18,6 +18,7 @@ $route['login'] = 'web/authentication/login';
 $route['forgot'] = 'web/authentication/forgot_password';
 $route['login/auth'] = 'web/authentication/login_auth';
 $route['logout'] = 'web/authentication/logout';
+$route['change-password'] = 'web/authentication/change_password';
 
 //Dashboard Controller Routes
 $route['dashboard'] = 'web/dashboard/page';

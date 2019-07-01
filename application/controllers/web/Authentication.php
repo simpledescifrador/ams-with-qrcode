@@ -83,6 +83,7 @@ class Authentication extends CI_Controller{
         $this->load->view('admin/passwordForgot', $data);
     }
 
+
     public function logout()
     {   
         // Removing session data
@@ -95,5 +96,66 @@ class Authentication extends CI_Controller{
         $data['display_msg'] = 'Successfully Logout';
         $this->session->set_flashdata('display_msg', $data['display_msg']);
         redirect('login');
+    }
+
+
+    /*
+    ** Change User Password 
+    **
+     */
+    public function change_password()
+    {
+        $this->load->library('form_validation'); //Load Form Validation
+
+        //Set Form Rules
+        $this->form_validation->set_rules('current_password', 'Current Password', 'trim|required|min_length[5]|max_length[15]|callback_check_current_password');
+        $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|min_length[5]|max_length[25]|differs[password]');
+        $this->form_validation->set_rules('repeat_password', 'Repeat Password', 'trim|required|min_length[5]|max_length[25]|matches[new_password]',
+            array(
+                'matches' => "Your New Password don't matched!"
+            )
+        );
+
+        if ($this->form_validation->run() == FALSE) {
+            /* Failed Form Validation */
+            echo validation_errors();
+		} else {
+
+            $user_id = $this->session->userdata['logged_in']['user_id']; //Get User ID
+            $this->load->model('user_model'); 
+
+            $new_password = $this->input->post('new_password');
+            $data = array(
+                'password' => md5($new_password)
+            );
+            
+            $result = $this->user_model->update($data, $user_id);
+
+            if (!$result) {
+                //Error
+                echo 'Error';
+            } else {
+                echo 'Success';
+            }
+            
+        }
+    }
+
+    public function check_current_password($password)
+    {
+        $user_id = $this->session->userdata['logged_in']['user_id']; //Get User ID
+        $this->load->model('user_model');
+        $con['id'] = $user_id; 
+        $con['conditions'] = array(
+            'password' => md5($password)
+        );
+        $result = $this->user_model->get($con);
+
+        if ($result) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('check_current_password', 'The {field} is invalid');
+            return FALSE;
+        }
     }
 }
