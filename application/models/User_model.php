@@ -98,4 +98,29 @@ class User_model extends CI_Model {
     }
 
         /* --------------- CUSTOM MODEL FUNCTION STARTS HERE ------------------ */
+
+
+    /** 
+     * Validate Login/User Data
+    * 
+    * @param mixed conditions 
+    * @return boolean fetched data from table tbl_users
+    */
+    function login_validation($username, $password)
+    {
+        $user_data = array(
+            'username' => $username,
+            'password' => md5($password)
+        );
+
+        $this->db->select('*');
+        $this->db->from('tbl_users');
+        $this->db->where($user_data);
+        $this->db->limit(1);
+        
+        $query = $this->db->get();
+
+        return $query->num_rows() == 1? true : false;
+    }
+
 }
