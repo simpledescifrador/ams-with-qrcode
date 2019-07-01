@@ -52,7 +52,7 @@
         <section id="breadcrumb">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li><a href="<?php echo base_url(); ?>auth/dashboardHome">Dashboard</a></li>
+                    <li><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
                     <li class="active">Students</li>
                 </ol>
             </div>

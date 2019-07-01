@@ -15,8 +15,10 @@ $route['api/v1/qrcode/(:any)/status']['get'] = 'api/attendance_api/check_qrcode_
 
 //Authentication Controller Routes
 $route['login'] = 'web/authentication/login';
+$route['register'] = 'web/authentication/register';
 $route['forgot'] = 'web/authentication/forgot_password';
 $route['login/auth'] = 'web/authentication/login_auth';
+$route['register/auth'] = 'web/authentication/register_auth';
 $route['logout'] = 'web/authentication/logout';
 $route['change-password'] = 'web/authentication/change_password';
 

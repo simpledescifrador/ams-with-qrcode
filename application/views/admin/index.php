@@ -59,7 +59,7 @@
 			</div>
 		</div>
 	    <!-- Bootstrap JS -->
-	    <script src="<?php echo base_url(); ?>vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>  
+	    <script src="<?php echo base_url(); ?>assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>  
 	    <script type="text/javascript">
 		   	document.getElementById("forgotPassword").onclick = function() {
 		        location.href = "<?php echo base_url(); ?>forgot";

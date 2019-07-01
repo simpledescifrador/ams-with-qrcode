@@ -86,6 +86,7 @@
                     success: function(msg) {
                         if (msg == 'Success') {
                             $('#alert-msg').html('<div class="alert alert-success text-center">Your Password has been change successfully!<br />Please logout to confirm your new password</div>');
+
                             //Clear Form
                             $('#txt_currentPassword').val('');
                             $('#txt_newPassword').val('');
@@ -93,6 +94,7 @@
 
                         } else if (msg == 'Error') {
                             $('#alert-msg').html('<div class="alert alert-danger text-center">Error in changing your password! Please try again later.</div>');
+                            
                             //Clear Form
                             $('#txt_currentPassword').val('');
                             $('#txt_newPassword').val('');
