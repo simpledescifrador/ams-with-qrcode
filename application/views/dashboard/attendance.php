@@ -16,8 +16,7 @@
                         <li><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li class="active"><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>   
-                        <li><a href="<?php echo base_url() ;?>dashboard/qrcodes">QR Codes</a></li> 
+                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -38,7 +37,6 @@
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-cog" aria-hidden="true">  <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="" data-toggle="modal"  data-target="#edit-informatoin-modal">Edit Inforation</a></li>
                                 <li><a href="" data-toggle="modal"  data-target="#password-change-modal">Change Password</a></li>
                                 <li><a href="<?php echo site_url('logout'); ?>">Logout</a></li>
                             </ul>
@@ -85,10 +83,6 @@
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
                                     Recitation
                             </a>
-                            <a href="<?php echo base_url() ;?>dashboard/qrcodes" class="list-group-item">
-                                <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> 
-                                    QR Codes
-                            </a>
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
@@ -109,13 +103,6 @@
                                         <th>Action</th>
                                     </tr>
                                 </table>
-                                <hr>
-                                <nav aria-label="...">
-                                    <ul class="pager">
-                                        <li><a href="#">Previous</a></li>
-                                        <li><a href="#">Next</a></li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
 
@@ -134,12 +121,6 @@
                                         <th>Action</th>
                                     </tr>
                                 </table>
-                                <nav aria-label="...">
-                                    <ul class="pager">
-                                        <li><a href="#">Previous</a></li>
-                                        <li><a href="#">Next</a></li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>

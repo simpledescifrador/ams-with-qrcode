@@ -31,6 +31,9 @@ $route['sections/new'] = 'web/section/new_section';
 
 //Student Controller Routes
 $route['students/new'] = 'web/student/new_student';
+$route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
 
+//Render Qrcodes Routes
+$route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$1';
 /* END OF API ROUTES */
 

@@ -60,7 +60,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="add-section" type="submit" class="btn btn-primary">Save changes</button>
+                                <button id="add-section" type="submit" class="btn btn-primary">Add Section</button>
                             </div>
                     </form>
                     </div>
@@ -102,7 +102,99 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="add-student" type="submit" class="btn btn-primary">Save changes</button>
+                                <button id="add-student" type="submit" class="btn btn-primary">Add Student</button>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit Student  -->
+            <div class="modal fade" id="edit-student-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Edit Student</h4>
+                            </div>
+                            <div id="student-alert-msg"></div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="fnameStudent">First Name</label>
+                                    <input type="text" class="form-control" id="student-fname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mnameStudent">Middle Name</label>
+                                    <input type="text" class="form-control" id="student-mname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lnameStudent">Last Name</label>
+                                    <input type="text" class="form-control" id="student-lname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="txt_email">Section</label>
+                                    <select class="form-control" id="section-id" name="schoolYear">
+                                        <option value="0">Select Section</option>
+                                        <?php foreach($sections as $value ) {
+                                            echo "<option value='{$value['section_id']}'>{$value['name']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="edit-student" type="submit" class="btn btn-primary">Edit Student</button>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Remove Student  -->
+            <div class="modal fade" id="remove-student-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Remove Student</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label>Are you sure you wanna remove this student?</label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id="remove-student" type="submit" class="btn btn-primary">Yes</button>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Generate Student's QR Code -->
+            <div class="modal fade" id="student-qrcode-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">QR Code</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <img id="student-qrcode-img" src="<?php echo base_url('assets/images/qrcode_placeholder.png'); ?>"/>
+                                        <a id="student-qrcode-print" hidden>Print</a>
+                                        <div class="form-group">
+                                        <label for="student-qrcode">QR Code:</label>
+                                        <input type="text" class="form-control" id="text-student-qrcode" readonly>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id="generate-student-qrcode-btn" type="button" class="btn btn-primary">Generate QR Code</button>
                             </div>
                     </form>
                     </div>
@@ -134,7 +226,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="change-password" type="submit" class="btn btn-primary">Save changes</button>
+                                <button id="change-password" type="submit" class="btn btn-primary">Change Password</button>
                             </div>
                     <?php echo form_close(); ?>
                     </div>
@@ -144,7 +236,7 @@
 
 
         <!-- Bootstrap core JavaScript--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="<?php echo base_url() ;?>assets/js/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
         <script src="<?php echo base_url() ;?>assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
@@ -165,6 +257,35 @@
                     }
                 );
             } );
+
+            //Button Clicks
+            $('.student_view_details').click(function() {
+                var studentId=$(this).closest("tr").find("td:eq(0)").text(); // get current row 1st 
+                //TD value 
+                location.href = "<?php echo base_url(); ?>dashboard/students/" + studentId;
+            });
+
+            /* GENERATE STUDENT QRCODE AJAX */
+            $('#generate-student-qrcode-btn').click(function() {
+                var form_data = {
+
+                };
+                var studentId = window.location.pathname.split("/").pop();
+                var url = "<?php echo base_url(); ?>qrcodes/students/" + studentId;
+                console.log(url);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(output) {
+                        var output = JSON.parse(output);
+                        $("#student-qrcode-img").attr('src', output.qrCodeUrl);
+                        $("#text-student-qrcode").val(output.qrCode);
+                        $('#student-qrcode-print').removeAttr('hidden');
+                    }
+                });
+                return false;
+            });
+
             /* ADD STUDENT AJAX */
             $('#add-student').click(function() {
                 var form_data = {
@@ -185,6 +306,10 @@
                             $('#student-mname').val('');
                             $('#student-lname').val('');
                             $('#section-id').val(0);
+
+                            setTimeout(function(){// wait for 2 secs
+                                location.reload(); // then reload the page.
+                            }, 2000); 
                         } else if (msg == 'Error') {
                             $('#student-alert-msg').html('<div class="alert alert-danger text-center">Error in adding student! Please try again later.</div>');
                             //Clear Form
@@ -215,7 +340,9 @@
                             //Clear Form
                             $('#text_section').val('');
                             $('#text_schoolYear').val('Select School Year');
-
+                            setTimeout(function(){// wait for 2 secs
+                                location.reload(); // then reload the page.
+                            }, 2000); 
                         } else if (msg == 'Error') {
                             $('#section-alert-msg').html('<div class="alert alert-danger text-center">Error in adding section! Please try again later.</div>');
                             //Clear Form
@@ -247,7 +374,9 @@
                             $('#txt_currentPassword').val('');
                             $('#txt_newPassword').val('');
                             $('#txt_repeatPassword').val('');
-
+                            setTimeout(function(){// wait for 2 secs
+                                location.reload(); // then reload the page.
+                            }, 2000); 
                         } else if (msg == 'Error') {
                             $('#alert-msg').html('<div class="alert alert-danger text-center">Error in changing your password! Please try again later.</div>');
                             //Clear Form
