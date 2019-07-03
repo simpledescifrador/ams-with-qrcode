@@ -73,7 +73,7 @@
                                 <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> 
                                     Sections
                             </a>
-                            <a href="d<?php echo base_url(); ?>dashboard/student" class="list-group-item active main-color-bg">
+                            <a href="<?php echo base_url(); ?>dashboard/student" class="list-group-item active main-color-bg">
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
                                     Students
                             </a>
@@ -107,17 +107,29 @@
                                 <h3 class="panel-title">List of Students</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="filter" placeholder="Search">
-                                </div>
-                                <table class="table table-striped table-hover">
-                                    <tr>
-                                        <th>Student ID</th>
-                                        <th>Name</th>
-                                        <th>Section</th>
-                                        <th>School Year</th>
-                                        <th>Action</th>
-                                    </tr>
+                            <table id="student_table" class="table table-striped table-bordered" style="width:100%">
+
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Section</th>
+                                            <th>School Year</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <?php foreach($student_data as $rows): ?>
+                                            <tr>
+                                                <td><?php echo $rows['student_id'];?></td>
+                                                <td><?php echo $rows['name']; ?></td>
+                                                <td><?php echo $rows['section']; ?></td>
+                                                <td><?php echo $rows['school_year']; ?></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg" >View Details</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

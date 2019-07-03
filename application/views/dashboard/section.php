@@ -108,17 +108,28 @@
                                 <h3 class="panel-title">List of Sections</h3>
                             </div>
                             <div class="panel-body">
-                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="filter" placeholder="Search">
-                                </div>
-                                <table class="table table-striped table-hover">
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>School Year</th>
-                                        <th>Section</th>
-                                        <th># of Students</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <table id="section_table" class="table table-striped table-bordered" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Section ID</th>
+                                            <th>School Year</th>
+                                            <th>Section</th>
+                                            <th># of Students</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <?php foreach($section_data as $rows): ?>
+                                            <tr>
+                                                <td><?php echo $rows['section_id'];?></td>
+                                                <td><?php echo $rows['school_year']; ?></td>
+                                                <td><?php echo $rows['section_name']; ?></td>
+                                                <td><?php echo $rows['total_students']; ?></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg" >View Details</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

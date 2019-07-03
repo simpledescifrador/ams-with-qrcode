@@ -142,11 +142,29 @@
             </div>
         <!-- /Modal -->
 
+
         <!-- Bootstrap core JavaScript--> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
         <script src="<?php echo base_url() ;?>assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+
         <script type="text/javascript">
 
+            $(document).ready( function () {
+                $('#section_table').DataTable(
+                    {
+                        "order": [[ 0, "desc" ]],
+                        responsive: true
+                    }
+                );
+                $('#student_table').DataTable(
+                    {
+                        "order": [[ 0, "desc" ]],
+                        responsive: true
+                    }
+                );
+            } );
             /* ADD STUDENT AJAX */
             $('#add-student').click(function() {
                 var form_data = {
@@ -197,6 +215,7 @@
                             //Clear Form
                             $('#text_section').val('');
                             $('#text_schoolYear').val('Select School Year');
+
                         } else if (msg == 'Error') {
                             $('#section-alert-msg').html('<div class="alert alert-danger text-center">Error in adding section! Please try again later.</div>');
                             //Clear Form
