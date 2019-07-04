@@ -69,7 +69,7 @@ class Attendance_api extends REST_Controller {
                 //Show Response OK
                 $this->response(
                     array(
-                        'qrcode_status' => $is_active[0]['status']
+                        'qrcode_status' => $is_active['status']
                     ), REST_Controller::HTTP_OK
                 );
             }
