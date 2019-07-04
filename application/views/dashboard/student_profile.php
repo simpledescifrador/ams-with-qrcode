@@ -113,7 +113,12 @@
                         <br /><hr />
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="img-responsive img-rounded" alt="profile picture">
+                                <?php if(!empty($student_details['profile_image_url'])):?>
+                                    <img src="<?php echo $student_details['profile_image_url']; ?>" class="img-responsive img-rounded" alt="profile picture">
+                                <?php else: ?>
+                                    <img src="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="img-responsive img-rounded" alt="profile picture">
+                                <?php endif; ?>
+
                             </div>
                             <div class="col-md-8"><br />
                                 <div class="form-group">
@@ -126,23 +131,39 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="student-section">Section</label>
-                                    <input type="text" class="form-control" id="student-section" placeholder="Section..." readonly value="<?php echo $student_details['section']; ?>">
+                                    <input type="text" class="form-control" id="student-section" placeholder="Section..." readonly value="<?php echo    $student_details['section']; ?>">
                                 </div>
                             </div>
                         </div><br /><hr />
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Student's Record</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Attendance</th>
-                                        <th>Recitation</th>
-                                    </tr>
-                                </table>
-                            </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Attendance Record</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-striped table-hover">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Attendance</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Recitation Record</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-striped table-hover">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Recitation</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                     <!-- /Overview -->

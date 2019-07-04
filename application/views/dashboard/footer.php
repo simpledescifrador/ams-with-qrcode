@@ -123,8 +123,8 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button id="edit-section" type="submit" class="btn btn-primary">Edit Section</button>
                             </div>
+                        </div>
                     </form>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
             <div class="modal fade" id="add-student-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form>
+                        <form id="add-student-form" action="<?php echo site_url('students/new');?>" enctype="multipart/form-data" method="post">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Add Student</h4>
@@ -161,20 +161,27 @@
                             <div id="student-alert-msg"></div>
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <label for="student-profile-image">Student Picture</label><br />
+                                    <img id="student-profile-img" src="" width="200" style="display:none;" /> <br />
+                                    <small>*Optional</small>
+                                    <input type="file" id="student-profile-image" name="profile-image"accept="image/*">
+                                    <a href="#" class="help-block">Click here to use WebCam</a>
+                                </div>
+                                <div class="form-group">
                                     <label for="fnameStudent">First Name</label>
-                                    <input type="text" class="form-control" id="student-fname">
+                                    <input type="text" class="form-control" id="student-fname" name="fname">
                                 </div>
                                 <div class="form-group">
                                     <label for="mnameStudent">Middle Name</label>
-                                    <input type="text" class="form-control" id="student-mname">
+                                    <input type="text" class="form-control" id="student-mname" name="mname">
                                 </div>
                                 <div class="form-group">
                                     <label for="lnameStudent">Last Name</label>
-                                    <input type="text" class="form-control" id="student-lname">
+                                    <input type="text" class="form-control" id="student-lname" name="lname">
                                 </div>
                                 <div class="form-group">
-                                    <label for="txt_email">Section</label>
-                                    <select class="form-control" id="section-id" name="schoolYear">
+                                    <label for="txt_section">Section</label>
+                                    <select class="form-control" id="section-id" name="section_id">
                                         <option value="0">Select Section</option>
                                         <?php foreach($sections as $value ) {
                                             echo "<option value='{$value['section_id']}'>{$value['name']}</option>";
@@ -267,7 +274,7 @@
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
                                         <img id="student-qrcode-img" src="<?php echo base_url('assets/images/qrcode_placeholder.png'); ?>"/>
-                                        <a id="student-qrcode-print" hidden>Print</a>
+                                        <a id="" hidden>Print</a>
                                         <div class="form-group">
                                         <label for="student-qrcode">QR Code:</label>
                                         <input type="text" class="form-control" id="text-student-qrcode" readonly>
@@ -278,6 +285,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                 <button id="generate-student-qrcode-btn" type="button" class="btn btn-primary">Generate QR Code</button>
+                                <button id="student-qrcode-print" type="button" class="btn btn-primary disabled">Print</button>
                             </div>
                     </form>
                     </div>
@@ -327,9 +335,22 @@
         <script type="text/javascript">
 
             $(document).ready( function () {
-                $('#enrolled_students_table').DataTable(
+                $('#recent_attendance_table').DataTable(
                     {
                         "order": [[ 0, "desc" ]],
+                        responsive: true,
+                        paging: false,
+                        "searching": false
+                    }
+                );
+                $('#attendance_table').DataTable(
+                    {
+                        "order": [[ 0, "desc" ]],
+                        responsive: true
+                    }
+                );
+                $('#enrolled_students_table').DataTable(
+                    {
                         responsive: true
                     }
                 );
@@ -369,24 +390,25 @@
                         var outputObject = JSON.parse(output);
                         $("#student-qrcode-img").attr('src', outputObject.qrCodeUrl);
                         $("#text-student-qrcode").val(outputObject.qrCode);
-                        $('#student-qrcode-print').removeAttr('hidden');
+                        $('#student-qrcode-print').removeClass('disabled');
                     }
                 });
                 return false;
             });
-
+            $("#student-profile-image").change(function(event) {
+                var tmppath = URL.createObjectURL(event.target.files[0]);
+                $("#student-profile-img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+            });
             /* ADD STUDENT AJAX */
-            $('#add-student').click(function() {
-                var form_data = {
-                    fname: $('#student-fname').val(),
-                    mname: $('#student-mname').val(),
-                    lname: $('#student-lname').val(),
-                    section_id: $('#section-id').val(),
-                };
+            $('#add-student-form').on('submit', function(e) {
+                e.preventDefault();
                 $.ajax({
-                    url: "<?php echo site_url('students/new'); ?>",
+                    url: $(this).attr('action'),
                     type: 'POST',
-                    data: form_data,
+                    data: new FormData(this),
+                    cache:false,
+                    contentType: false,
+                    processData: false,
                     success: function(msg) {
                         if (msg == 'Success') {
                             $('#student-alert-msg').html('<div class="alert alert-success text-center">New Student Added Successfully!</div>');
@@ -395,10 +417,11 @@
                             $('#student-mname').val('');
                             $('#student-lname').val('');
                             $('#section-id').val(0);
-
+                            $('#student-profile-image').val('');
+                            $('#student-profile-img').removeAttr('src');
                             setTimeout(function(){// wait for 2 secs
                                 location.reload(); // then reload the page.
-                            }, 2000); 
+                            }, 1000); 
                         } else if (msg == 'Error') {
                             $('#student-alert-msg').html('<div class="alert alert-danger text-center">Error in adding student! Please try again later.</div>');
                             //Clear Form
@@ -406,6 +429,8 @@
                             $('#student-mname').val('');
                             $('#student-lname').val('');
                             $('#section-id').val(0);
+                            $('#student-profile-image').val('');
+                            $('#student-profile-img').removeAttr('src');
                         } else {
                             $('#student-alert-msg').html('<div class="alert alert-danger">' + msg + '</div>');
                         }
@@ -431,7 +456,7 @@
                             $('#text_schoolYear').val('Select School Year');
                             setTimeout(function(){// wait for 2 secs
                                 location.reload(); // then reload the page.
-                            }, 2000); 
+                            }, 1000); 
                         } else if (msg == 'Error') {
                             $('#section-alert-msg').html('<div class="alert alert-danger text-center">Error in adding section! Please try again later.</div>');
                             //Clear Form
@@ -465,7 +490,7 @@
                             $('#txt_repeatPassword').val('');
                             setTimeout(function(){// wait for 2 secs
                                 location.reload(); // then reload the page.
-                            }, 2000); 
+                            }, 1000); 
                         } else if (msg == 'Error') {
                             $('#alert-msg').html('<div class="alert alert-danger text-center">Error in changing your password! Please try again later.</div>');
                             //Clear Form

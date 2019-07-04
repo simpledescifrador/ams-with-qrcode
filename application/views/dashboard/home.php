@@ -99,13 +99,13 @@
                               <div class="panel-body">
                                     <div class="col-md-3">
                                         <div class="well dash-box">
-                                            <h2><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> 6 </h2>
+                                            <h2><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> <?php echo $section_count; ?> </h2>
                                             <h4>Sections</h4>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="well dash-box">
-                                            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 6 </h2>
+                                            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo $student_count; ?> </h2>
                                             <h4>Students</h4>
                                         </div>
                                     </div>

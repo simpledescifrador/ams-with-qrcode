@@ -90,18 +90,32 @@
                     <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Recent Scanned</h3>
+                                <h3 class="panel-title">Recent Scanned <small>(Last 5 records)</small></h3>
                             </div>
                             <div class="panel-body">
-                                <table class="table table-striped table-hover">
-                                    <tr>
-                                        <th>Date & Time</th>
-                                        <th>Student ID</th>
-                                        <th>Name</th>
-                                        <th>Section</th>
-                                        <th>Remarks</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <table id="recent_attendance_table" class="table table-striped table-bordered" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Date & Time</th>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Section</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($recent_attendance_records as $rows): ?>
+                                            <tr>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['student_id']; ?></td>
+                                                <td><?php echo $rows['name']; ?></td>
+                                                <td><?php echo $rows['section']; ?></td>
+                                                <td><?php echo $rows['remarks']; ?></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -112,14 +126,31 @@
                             </div>
                             <div class="panel-body">
                                 <table class="table table-striped table-hover">
-                                    <tr>
-                                        <th>Date & Time</th>
-                                        <th>Student ID</th>
-                                        <th>Name</th>
-                                        <th>Section</th>
-                                        <th>Remarks</th>
-                                        <th>Action</th>
-                                    </tr>
+
+                                </table>
+                                <table id="attendance_table" class="table table-striped table-bordered" style="width:100%">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Date & Time</th>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Section</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($attendance_records as $rows): ?>
+                                            <tr>
+                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo $rows['student_id']; ?></td>
+                                                <td><?php echo $rows['name']; ?></td>
+                                                <td><?php echo $rows['section']; ?></td>
+                                                <td><?php echo $rows['remarks']; ?></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

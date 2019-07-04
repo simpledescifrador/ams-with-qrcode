@@ -97,4 +97,15 @@ class Attendance_model extends CI_Model {
     }
 
         /* --------------- CUSTOM MODEL FUNCTION STARTS HERE ------------------ */
+
+    function recent_attendance()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_attendance');
+        $this->db->limit(5);
+        $this->db->order_by('date', 'desc');
+        
+        $query = $this->db->get();
+        return ($query->num_rows() > 0) ? $query->result_array() : false;
+    }
 }

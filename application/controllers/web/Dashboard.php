@@ -15,7 +15,19 @@ class Dashboard extends CI_Controller{
 
             //Load Data to views
             switch ($slug) {
-                case 'dashboard':
+                case 'home':
+                    $this->load->model('section_model');
+                    $this->load->model('student_model');
+
+                    //get overview
+                    $section_con['returnType'] = 'count';
+                    $section_count = $this->section_model->get($section_con); // Get Section Count
+                    $data['section_count'] = $section_count;
+
+                    $student_con['returnType'] = 'count';
+                    $student_count = $this->student_model->get($student_con); //Get Student
+                    $data['student_count'] = $student_count;
+
                     break;
                 case 'section':
                     $this->load->model('student_model');
@@ -80,6 +92,50 @@ class Dashboard extends CI_Controller{
 
                     break;
                 case 'attendance':
+                    $this->load->model('section_model');
+                    $this->load->model('student_model');
+                    $this->load->model('attendance_model');
+                    $this->load->model('qrcode_model');
+                    
+
+                    $attendance_records = $this->attendance_model->get();
+                    $recent_attendance = $this->attendance_model->recent_attendance();
+                    if ($recent_attendance) {
+                        foreach ($recent_attendance as $key => $value) {
+                            $data['recent_attendance_records'][$key]['date'] = $value['date'];
+                            $data['recent_attendance_records'][$key]['remarks'] = $value['remarks'];
+
+                            $qrcode_details = $this->qrcode_model->get(array('id' => $value['qr_code']));
+                            $student_details = $this->student_model->get(array('id' => $qrcode_details['student_id']));
+                            $section_details = $this->section_model->get(array('id' => $student_details['section_id']));
+
+                            $data['recent_attendance_records'][$key]['student_id'] = $qrcode_details['student_id'];
+                            $data['recent_attendance_records'][$key]['name'] = $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'];
+                            $data['recent_attendance_records'][$key]['section'] = $section_details['name'];
+                        }
+                    } else {
+                        $data['recent_attendance_records'] = array();
+                    }
+                    
+                    if ($attendance_records) {
+                        foreach ($attendance_records as $key => $value) {
+                            $data['attendance_records'][$key]['date'] = $value['date'];
+                            $data['attendance_records'][$key]['remarks'] = $value['remarks'];
+
+                            $qrcode_details = $this->qrcode_model->get(array('id' => $value['qr_code']));
+                            $student_details = $this->student_model->get(array('id' => $qrcode_details['student_id']));
+                            $section_details = $this->section_model->get(array('id' => $student_details['section_id']));
+
+                            $data['attendance_records'][$key]['student_id'] = $qrcode_details['student_id'];
+                            $data['attendance_records'][$key]['name'] = $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'];
+                            $data['attendance_records'][$key]['section'] = $section_details['name'];
+                        }
+                    } else {
+                        $data['attendance_records'] = array();
+
+                    }
+                    
+                    
                     break;
                 case 'recitation':
                     break;
@@ -87,7 +143,7 @@ class Dashboard extends CI_Controller{
                     break;
             }
 
-            //Show Login View
+            //Show dashboard View
             $this->load->view('dashboard/header', $data);
             $this->load->view('dashboard/' . $slug, $data);   
             $this->load->view('dashboard/footer', $data);

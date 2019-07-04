@@ -71,7 +71,7 @@ class Student_model extends CI_Model {
         }
 
         if (array_key_exists("id", $params)) {
-            $this->db->where('id', $params['id']);
+            $this->db->where('student_id', $params['id']);
             $query = $this->db->get();
             $result = $query->row_array();
         } else {

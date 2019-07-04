@@ -20,7 +20,7 @@ class Student extends CI_Controller{
         $mname = $this->input->post('mname');
         $lname = $this->input->post('lname');
         $section_id = $this->input->post('section_id');
-
+        
         if ($this->form_validation->run() == FALSE) {
             /* Failed Form Validation */
             echo validation_errors();
@@ -28,21 +28,39 @@ class Student extends CI_Controller{
             echo "Please select the section!";
         } else {
 
-            //Prepare the student data
-            $student_data = array(
-                'first_name' => $fname,
-                'middle_name' => $mname,
-                'last_name' => $lname,
-                'section_id' => $section_id
-            );
-            //Insert new Student
-            $result = $this->student_model->insert($student_data);
+            if(isset($_FILES['profile-image']['name'])) {
 
-            if (!$result) {
-                echo 'Error';
-            } else {
-                echo 'Success';
+                if (!is_dir('uploads/students/profile/')) {
+                    mkdir("uploads/students/profile/", 0777);
+                }
+
+                $config['upload_path'] = './uploads/students/profile/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $this->load->library('upload', $config);
+                if (!$this->upload->do_upload('profile-image')) {
+                    echo $this->upload->display_errors();
+                } else {
+                    $data = $this->upload->data();
+                    //Prepare the student data
+                    $student_data = array(
+                        'first_name' => $fname,
+                        'middle_name' => $mname,
+                        'last_name' => $lname,
+                        'section_id' => $section_id,
+                        'profile_image_url' => base_url() . 'uploads/students/profile/' . $data['file_name']
+                    );
+                    //Insert new Student
+                    $result = $this->student_model->insert($student_data);
+
+                    if (!$result) {
+                        echo 'Error';
+                    } else {
+                        echo 'Success';
+                    }
+                }
+                
             }
+
             
         }
     }
@@ -67,7 +85,8 @@ class Student extends CI_Controller{
         $data['student_details'] = array(
             'student_id' => $student_details['student_id'],
             'student_name' => $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'],
-            'section' => $section['name']
+            'section' => $section['name'],
+            'profile_image_url' => $student_details['profile_image_url']
         );
 
         //Get Sections for Edit Profile Modal
