@@ -60,4 +60,38 @@ class Section extends CI_Controller{
 
     } //End of new_section
 
+
+    public function view_section_details($section_id)
+    {
+        $data['title'] = ucfirst('Section Details | Attendance Monitoring System');
+        $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
+
+        $this->load->model('school_year_model');
+        $section_details = $this->section_model->get(array('id' => $section_id));
+        $sy_details = $this->school_year_model->get(array('id' => $section_details['sy_id']));
+        
+        $data['section_details'] = array(
+            'section_id' => $section_id,
+            'section' => $section_details['name'],
+            'school_year' => $sy_details['school_year']
+        );
+
+        //Get Students enrolled for this section
+        $this->load->model('student_model');
+        $enrolled_students_con['conditions'] = array(
+            'section_id' => $section_id
+        );
+        $enrolled_students = $this->student_model->get($enrolled_students_con);
+        
+        if (!$enrolled_students) {
+            $data['enrolled_students'] = array();
+        } else {
+            $data['enrolled_students'] = $enrolled_students;
+        }
+        
+        
+        $this->load->view('dashboard/header', $data);
+        $this->load->view('dashboard/section_details', $data);   
+        $this->load->view('dashboard/footer', $data);
+    }
 }

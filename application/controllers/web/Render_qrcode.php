@@ -15,7 +15,9 @@ class Render_qrcode extends CI_Controller{
         if (!isset($student_id)) {
             echo "Error";
         } else {
-
+            if (!is_dir('uploads/students/qrcode/')) {
+                mkdir('uploads/students/qrcode/', 0777, TRUE);
+            }
             $this->load->model('student_model');
             $student_con['returnType'] = 'single';
             $student_con['conditions'] = array(
@@ -61,9 +63,9 @@ class Render_qrcode extends CI_Controller{
                     $params['data'] = json_encode($data);
                     $params['level'] = 'L';
                     $params['size'] = 5;
-                    $params['savename'] = FCPATH. 'uploads/qrcodes/' . $data['qr_code'] . '.png';
+                    $params['savename'] = FCPATH . 'uploads/students/qrcode/'. $data['qr_code'] . '.png';
                     $this->ciqrcode->generate($params);
-                    $qrcode_url = base_url('uploads/qrcodes/'. $data['qr_code'] . '.png');
+                    $qrcode_url = base_url('uploads/students/qrcode/'. $data['qr_code'] . '.png');
                     $output = array(
                         'qrCode' => $data['qr_code'],
                         'qrCodeUrl' => $qrcode_url
@@ -73,9 +75,9 @@ class Render_qrcode extends CI_Controller{
                 } else {
                     echo "error";
                 }
-            } else {
+            } else {    
                 //Use Existing QRcode
-                $qrcode_url = base_url('uploads/qrcodes/'. $exist['qr_code'] . '.png');
+                $qrcode_url = base_url('uploads/students/qrcode/'. $exist['qr_code'] . '.png');
                 $output = array(
                     'qrCode' => $exist['qr_code'],
                     'qrCodeUrl' => $qrcode_url

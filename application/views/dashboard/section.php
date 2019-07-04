@@ -120,7 +120,7 @@
                                                 <td><?php echo $rows['school_year']; ?></td>
                                                 <td><?php echo $rows['section_name']; ?></td>
                                                 <td><?php echo $rows['total_students']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg" >View Details</button></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg section_view_details" >View Details</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

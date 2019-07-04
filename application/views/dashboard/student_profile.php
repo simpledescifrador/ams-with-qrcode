@@ -14,9 +14,9 @@
                 <ul class="nav navbar-nav">
                         <li><a href="<?php echo base_url() ;?>dashboard">Home</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
-                        <li><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
+                        <li class="active"><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li class="active"><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>
+                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -30,7 +30,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-11">
-                        <h2><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard <Small>Recitation Record</Small></h1>
+                        <h2><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard <Small>Student's Profile</Small></h1>
                     </div>
                     <div class="col-md-1">
                         <div class="dropdown settings">
@@ -74,7 +74,7 @@
                             </a>
                             <a href="<?php echo base_url(); ?>dashboard/student" class="list-group-item active main-color-bg">
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
-                                    Students <small><i>   Profile</i></small>
+                                    Students <small><i> -  Profile</i></small>
                             </a>
                             <a href="<?php echo base_url() ;?>dashboard/attendance" class="list-group-item">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
@@ -92,8 +92,8 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-3">
-                                <a id="generate-student-qrcode" href="#" class="list-group-item" data-toggle="modal"  data-target="#student-qrcode-modal">
-                                    <span  class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#student-qrcode-modal">
+                                    <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                      Generate Qr Code
                                 </a>
                             </div>
@@ -113,10 +113,9 @@
                         <br /><hr />
                         <div class="row">
                             <div class="col-md-4">
-                                <p><center>Student</center></p>
-                                <p><center>Image here!</center></p>
+                                <img src="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="img-responsive img-rounded" alt="profile picture">
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8"><br />
                                 <div class="form-group">
                                     <label for="student-id">Student ID</label>
                                     <input type="text" class="form-control" id="student-id" placeholder="ABC123..." readonly value="<?php echo $student_details['student_id']; ?>">
@@ -129,20 +128,20 @@
                                     <label for="student-section">Section</label>
                                     <input type="text" class="form-control" id="student-section" placeholder="Section..." readonly value="<?php echo $student_details['section']; ?>">
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Students Record</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <table class="table table-striped table-hover">
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Attendance</th>
-                                                <th>Recitation</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
+                            </div>
+                        </div><br /><hr />
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Student's Record</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Attendance</th>
+                                        <th>Recitation</th>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>

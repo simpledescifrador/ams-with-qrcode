@@ -49,7 +49,6 @@ class Student extends CI_Controller{
 
     public function view_student_profile($student_id)
     {
-        //Load Login View
         $data['title'] = ucfirst('Student Profile | Attendance Monitoring System');
         $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
 
@@ -75,7 +74,6 @@ class Student extends CI_Controller{
         $sections = $this->section_model->get();
         $data['sections'] = $sections;
 
-        //Show Login View
         $this->load->view('dashboard/header', $data);
         $this->load->view('dashboard/student_profile', $data);   
         $this->load->view('dashboard/footer', $data);
