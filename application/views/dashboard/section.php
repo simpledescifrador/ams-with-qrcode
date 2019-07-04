@@ -12,13 +12,11 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                    <ul class="nav navbar-nav">
                         <li><a href="<?php echo base_url() ;?>dashboard">Home</a></li>
                         <li class="active"><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>   
-                        <li><a href="<?php echo base_url() ;?>dashboard/qrcodes">QR Codes</a></li>                   
+                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>                 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -85,24 +83,20 @@
                             <a href="<?php echo base_url() ;?>dashboard/recitation" class="list-group-item">
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
                                     Recitation
-                            </a>
-                            <a href="<?php echo base_url() ;?>dashboard/qrcode" class="list-group-item">
-                                <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> 
-                                    QR Codes
-                            </a>
-                        </div>
-                        <div> 
-                            <div class="col-md-12">
-                                <a href="#" class="list-group-item active success-btn" data-toggle="modal"  data-target="#add-section-modal">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                     Add Section
-                            </a>
-                            </div>
+                            </a> 
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
                     <!-- Overview -->
-                    <div class="col-md-9">
+                    <div> 
+                        <div class="col-md-2">
+                            <a href="#" class="list-group-item active success-btn" data-toggle="modal"  data-target="#add-section-modal">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                 Add Section
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9"><br />
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">List of Sections</h3>
@@ -126,7 +120,7 @@
                                                 <td><?php echo $rows['school_year']; ?></td>
                                                 <td><?php echo $rows['section_name']; ?></td>
                                                 <td><?php echo $rows['total_students']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg" >View Details</button></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg section_view_details" >View Details</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

@@ -46,4 +46,38 @@ class Student extends CI_Controller{
             
         }
     }
+
+    public function view_student_profile($student_id)
+    {
+        $data['title'] = ucfirst('Student Profile | Attendance Monitoring System');
+        $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
+
+        $this->load->model('section_model');
+        $student_con['returnType'] = 'single';
+        $student_con['conditions'] = array(
+            'student_id' => $student_id
+        );
+        
+        $student_details = $this->student_model->get($student_con);
+        $section_con['returnType'] = 'single';
+        $section_con['conditions'] = array(
+            'section_id' => $student_details['section_id']
+        );
+        $section = $this->section_model->get($section_con);
+        $data['student_details'] = array(
+            'student_id' => $student_details['student_id'],
+            'student_name' => $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'],
+            'section' => $section['name']
+        );
+
+        //Get Sections for Edit Profile Modal
+        $sections = $this->section_model->get();
+        $data['sections'] = $sections;
+
+        $this->load->view('dashboard/header', $data);
+        $this->load->view('dashboard/student_profile', $data);   
+        $this->load->view('dashboard/footer', $data);
+    }
+
+
 }

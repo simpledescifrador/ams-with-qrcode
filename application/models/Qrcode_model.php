@@ -50,7 +50,7 @@ class Qrcode_model extends CI_Model {
         $insert_result = $this->db->insert('tbl_qrcodes', $data);
 
         //return the status
-        return $insert_result ? $this->db->insert_id() : false;
+        return $insert_result ? true : false;
     }
 
     /** 
