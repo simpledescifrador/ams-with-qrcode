@@ -16,8 +16,7 @@
                         <li><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
                         <li class="active"><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>   
-                        <li><a href="<?php echo base_url() ;?>dashboard/qrcodes">QR Codes</a></li> 
+                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -85,23 +84,19 @@
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
                                     Recitation
                             </a>
-                            <a href="<?php echo base_url() ;?>dashboard/qrcodes" class="list-group-item">
-                                <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> 
-                                    QR Codes
-                            </a>
-                        </div>
-                        <div> 
-                            <div class="col-md-12">
-                                <a href="#" class="list-group-item active success-btn" data-toggle="modal"  data-target="#add-student-modal">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                     Add Student
-                            </a>
-                            </div>
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
                     <!-- Overview -->
-                    <div class="col-md-9">
+                    <div>
+                        <div class="col-md-2">
+                            <a href="#" class="list-group-item active success-btn" data-toggle="modal"  data-target="#add-student-modal">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                 Add Student
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9"><br />
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">List of Students</h3>
@@ -126,7 +121,7 @@
                                                 <td><?php echo $rows['name']; ?></td>
                                                 <td><?php echo $rows['section']; ?></td>
                                                 <td><?php echo $rows['school_year']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg" >View Details</button></td>
+                                                <td><button type="button" class="btn btn-sm main-color-bg student_view_details">View Details</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

@@ -16,8 +16,7 @@
                         <li><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>   
-                        <li><a href="<?php echo base_url() ;?>dashboard/qrcodes">QR Codes</a></li> 
+                        <li><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -84,24 +83,10 @@
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
                                     Recitation
                             </a>
-                            <a href="<?php echo base_url() ;?>dashboard/qrcodes" class="list-group-item">
-                                <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span> 
-                                    QR Codes
-                            </a>
                         </div>
                         <div class="well"> 
-                            <h4>Label</h4> 
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                    60%
-                                 </div>
-                            </div>
-                            <h4>Label</h4> 
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                    25%
-                                 </div>
-                            </div>
+                            <h4>Time</h4> 
+                            <p>00:00:00 AM</p>
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
@@ -112,33 +97,55 @@
                                     <h3 class="panel-title">Overview</h3>
                               </div>
                               <div class="panel-body">
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="well dash-box">
                                             <h2><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> 6 </h2>
                                             <h4>Sections</h4>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="well dash-box">
                                             <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 6 </h2>
                                             <h4>Students</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="well dash-box">
+                                            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 0 </h2>
+                                            <h4>Label</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="well dash-box">
+                                            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 0 </h2>
+                                            <h4>Label</h4>
                                         </div>
                                     </div>
                               </div>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Top Students</h3>
+                                <h3 class="panel-title">Attendance Highlight</h3>
                             </div>
                             <div class="panel-body">
                                 <table class="table table-striped table-hover">
                                     <tr>
-                                        <th>Label</th>
-                                        <th>Label</th>
-                                        <th>Label</th>
-                                        <th>Label</th>
-                                        <th>Label</th>
-                                        <th>Label</th>
+                                        <th>Date</th>
+                                        <th>Present</th>
+                                        <th>Late</th>
+                                        <th>Absent</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Analytics</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        
                                     </tr>
                                 </table>
                             </div>
