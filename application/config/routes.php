@@ -28,6 +28,8 @@ $route['dashboard/(:any)'] = 'web/dashboard/page/$1';
 
 //Section Controller Routes
 $route['sections/new'] = 'web/section/new_section';
+$route['sections/(:num)/edit'] = 'web/section/edit_section_details/$1';
+$route['sections/(:num)/delete'] = 'web/section/remove_section/$1';
 $route['dashboard/sections/(:num)'] = 'web/section/view_section_details/$1';
 
 //Student Controller Routes

@@ -92,6 +92,80 @@ class Section extends CI_Controller{
         
         $this->load->view('dashboard/header', $data);
         $this->load->view('dashboard/section_details', $data);   
-        $this->load->view('dashboard/footer', $data);
+        $this->load->view('dashboard/footers/dashboard_footer');
+        $this->load->view('dashboard/footers/section_details_footer', $data);
+    }
+
+    public function edit_section_details($section_id)
+    {
+        $this->load->library('form_validation'); //Load Form Validation
+        $this->form_validation->set_rules('section', 'Section', 'trim|required|min_length[5]');
+
+        $section_name = $this->input->post('section');
+        $sy = $this->input->post('school_year');
+        $section_name = $this->input->post('section');
+        $school_year = $this->input->post('school_year');
+        
+        
+        
+        if ($this->form_validation->run() == FALSE) {
+            //Show Errors
+            echo validation_errors();  
+        } else if ($school_year == "Select School Year") {
+            echo "Please select the school year";
+        } else {
+            //Success Form Validation
+            $sy_id = null;
+
+            //Get School Year ID 
+            //Check if school year exist in the database
+            $this->load->model('school_year_model'); //Load School Year Model
+
+            $is_exist = $this->school_year_model->sy_exist($sy);
+
+            if ($is_exist == false) {
+                //School Year Not Found. Insert New School Year
+                $sy_id = $this->school_year_model->insert(array('school_year' => $sy));
+            } else {
+                $sy_id = $is_exist['sy_id'];
+            }
+
+            //Prepare the Data to be inserted
+            $section_data = array(
+                'name' => $section_name,
+                'sy_id' => $sy_id
+            );
+
+            //Update Section
+            $result = $this->section_model->update($section_data, $section_id);
+
+            if (!$result) {
+                //Failed
+                echo 'Failed';
+            } else {
+                //Successful
+                echo 'Success';
+            }
+        }
+        
+    }
+
+    public function remove_section($section_id)
+    {
+        //Remove Student Section ID Associated with the section
+        $this->load->model('student_model');
+        
+        $update_student = $this->student_model->remove_section_ids($section_id);
+
+        //Delete Section
+        $result = $this->section_model->delete($section_id);
+
+        if ($result) {
+            //Success Delete
+            echo "Success";
+        } else {
+            echo "Error";
+        }
+        
     }
 }

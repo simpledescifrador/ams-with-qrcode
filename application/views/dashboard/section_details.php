@@ -98,7 +98,7 @@
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-section-modal">
+                                <a id="edit_section_anchor" href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-section-modal">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                      Edit
                                 </a>

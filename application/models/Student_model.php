@@ -98,4 +98,13 @@ class Student_model extends CI_Model {
     }
 
         /* --------------- CUSTOM MODEL FUNCTION STARTS HERE ------------------ */
+
+    function remove_section_ids($section_id)
+    {
+        //update student data in tbl_students table
+        $update_result = $this->db->update('tbl_students', array('section_id' => null), array('section_id' => $section_id));
+
+        //return the status
+        return $update_result ? true : false;
+    }
 }

@@ -95,7 +95,9 @@ class Student extends CI_Controller{
 
         $this->load->view('dashboard/header', $data);
         $this->load->view('dashboard/student_profile', $data);   
-        $this->load->view('dashboard/footer', $data);
+        $this->load->view('dashboard/footers/dashboard_footer');
+        $this->load->view('dashboard/footers/student_profile_footer', $data);
+
     }
 
 

@@ -27,7 +27,12 @@ class Dashboard extends CI_Controller{
                     $student_con['returnType'] = 'count';
                     $student_count = $this->student_model->get($student_con); //Get Student
                     $data['student_count'] = $student_count;
-
+                    
+                    //Show dashboard View
+                    $this->load->view('dashboard/header', $data);
+                    $this->load->view('dashboard/home', $data);   
+                    $this->load->view('dashboard/footers/dashboard_footer');
+                    $this->load->view('dashboard/footers/home_footer', $data);
                     break;
                 case 'section':
                     $this->load->model('student_model');
@@ -56,6 +61,12 @@ class Dashboard extends CI_Controller{
                         //No Section Available
                         $data['section_data'] = array();
                     }
+                    //Show dashboard View
+                    $this->load->view('dashboard/header', $data);
+                    $this->load->view('dashboard/section', $data);   
+                    $this->load->view('dashboard/footers/dashboard_footer');
+                    $this->load->view('dashboard/footers/section_footer', $data);
+                    
                     break;
                 case 'student':
                     $this->load->model('section_model');
@@ -89,6 +100,11 @@ class Dashboard extends CI_Controller{
                         $data['student_data'] = array();
                     }
                     
+                    //Show dashboard View
+                    $this->load->view('dashboard/header', $data);
+                    $this->load->view('dashboard/student', $data);   
+                    $this->load->view('dashboard/footers/dashboard_footer');
+                    $this->load->view('dashboard/footers/student_footer', $data);
 
                     break;
                 case 'attendance':
@@ -135,18 +151,21 @@ class Dashboard extends CI_Controller{
 
                     }
                     
-                    
+                    //Show dashboard View
+                    $this->load->view('dashboard/header', $data);
+                    $this->load->view('dashboard/attendance', $data);   
+                    $this->load->view('dashboard/footers/dashboard_footer');
+                    $this->load->view('dashboard/footers/attendance_footer', $data);
                     break;
                 case 'recitation':
-                    break;
-                case 'qrcodes':
+                    //Show dashboard View
+                    $this->load->view('dashboard/header', $data);
+                    $this->load->view('dashboard/recitation', $data);   
+                    $this->load->view('dashboard/footers/dashboard_footer');
+                    $this->load->view('dashboard/footers/recitation_footer', $data);
                     break;
             }
 
-            //Show dashboard View
-            $this->load->view('dashboard/header', $data);
-            $this->load->view('dashboard/' . $slug, $data);   
-            $this->load->view('dashboard/footer', $data);
             
         } else {
             redirect('login','refresh'); // Login First
