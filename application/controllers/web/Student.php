@@ -85,9 +85,19 @@ class Student extends CI_Controller{
         $data['student_details'] = array(
             'student_id' => $student_details['student_id'],
             'student_name' => $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'],
-            'section' => $section['name'],
+            'section' => array(
+                'id' => $section['section_id'],
+                'name' => $section['name']
+            ),
             'profile_image_url' => $student_details['profile_image_url']
         );
+
+        $data['student_details']['name'] = array(
+            'fname' => $student_details['first_name'],
+            'mname' => $student_details['middle_name'],
+            'lname' => $student_details['last_name']
+        );
+
 
         //Get Sections for Edit Profile Modal
         $sections = $this->section_model->get();
@@ -100,5 +110,51 @@ class Student extends CI_Controller{
 
     }
 
+    public function edit_student_details($student_id)
+    {
+        $this->load->library('form_validation'); //Load Form Validation
+        $this->form_validation->set_rules('fname', 'First Name', 'trim|required');
+        $this->form_validation->set_rules('mname', 'Middle Name', 'trim');
+        $this->form_validation->set_rules('lname', 'Last Name', 'trim|required');
 
+        $fname = $this->input->post('fname');
+        $mname = $this->input->post('mname');
+        $lname = $this->input->post('lname');
+        $section_id = $this->input->post('section_id');
+        
+        if ($this->form_validation->run() == FALSE) {
+            /* Failed Form Validation */
+            echo validation_errors();
+        } else if ($section_id == 0) {
+            echo "Please select the section!";
+        } else {
+            $student_data = array(
+                'first_name' => $fname,
+                'middle_name' => $mname,
+                'last_name' => $lname,
+                'section_id' => $section_id
+            );
+
+            //Insert new Student
+            $result = $this->student_model->update($student_data, $student_id);
+            if (!$result) {
+                echo 'Error';
+            } else {
+                echo 'Success';
+            }
+        }
+        
+    }
+
+    public function remove_student($student_id)
+    {
+        $result = $this->student_model->delete($student_id);
+
+        if ($result) {
+            //Success Delete
+            echo "Success";
+        } else {
+            echo "Error";
+        }
+    }
 }

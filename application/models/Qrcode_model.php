@@ -20,7 +20,7 @@ class Qrcode_model extends CI_Model {
     {
         //update qrcode from tbl_qrcodes table
 
-        $delete = $this->db->delete('tbl_qrcodes', array('qrcode' => $id));
+        $delete = $this->db->delete('tbl_qrcodes', array('qr_code' => $id));
         //return the status
         return $delete ? true : false;
     }
@@ -34,7 +34,7 @@ class Qrcode_model extends CI_Model {
     public function update($data, $id)
     {
         //update qrcode data in tbl_qrcodes table
-        $update_result = $this->db->update('tbl_qrcodes', $data, array('qrcode' => $id));
+        $update_result = $this->db->update('tbl_qrcodes', $data, array('qr_code' => $id));
 
         //return the status
         return $update_result ? true : false;

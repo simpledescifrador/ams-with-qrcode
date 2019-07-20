@@ -98,7 +98,7 @@
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-student-modal">
+                                <a id="edit-student-anchor" href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-student-modal">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                      Edit
                                 </a>
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="student-section">Section</label>
-                                    <input type="text" class="form-control" id="student-section" placeholder="Section..." readonly value="<?php echo    $student_details['section']; ?>">
+                                    <input type="text" class="form-control" id="student-section" placeholder="Section..." readonly value="<?php echo $student_details['section']['name']; ?>">
                                 </div>
                             </div>
                         </div><br /><hr />

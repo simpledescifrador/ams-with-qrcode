@@ -11,15 +11,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="fnameStudent">First Name</label>
-                        <input type="text" class="form-control" id="student-fname">
+                        <input type="text" class="form-control" id="student-fname" name="fname" value="<?php echo $student_details['name']['fname'];?>">
                     </div>
                     <div class="form-group">
                         <label for="mnameStudent">Middle Name</label>
-                        <input type="text" class="form-control" id="student-mname">
+                        <input type="text" class="form-control" id="student-mname" name="mname" value="<?php echo $student_details['name']['mname'];?>">
                     </div>
                     <div class="form-group">
                         <label for="lnameStudent">Last Name</label>
-                        <input type="text" class="form-control" id="student-lname">
+                        <input type="text" class="form-control" id="student-lname" name="lname" value="<?php echo $student_details['name']['lname'];?>">
                     </div>
                     <div class="form-group">
                         <label for="txt_email">Section</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="edit-student" type="submit" class="btn btn-primary">Edit Student</button>
+                    <button id="edit-student" type="button" class="btn btn-primary">Edit Student</button>
                 </div>
         </form>
         </div>
@@ -93,7 +93,10 @@
 </div>
 
 <script type="text/javascript">
-
+   $('#edit-student-anchor').click(function() {
+        var sectionValue = "<?php echo $student_details['section']['id']; ?>";
+        $('#section-id').val(sectionValue);
+    });
     /* GENERATE STUDENT QRCODE AJAX */
     $('#generate-student-qrcode-btn').click(function() {
         var studentId = window.location.pathname.split("/").pop();
@@ -109,5 +112,63 @@
             }
         });
         return false;
+    });
+
+    //Edit Student
+    $('#edit-student').click(function() {
+        var form_data = {
+            fname: $('#student-fname').val(),
+            mname: $('#student-mname').val(),
+            lname: $('#student-lname').val(),
+            section_id: $('#section-id').val()
+        };
+        $.ajax({
+            url: "<?php echo site_url("students/" . $student_details['student_id'] . "/edit"); ?>",
+            type: 'POST',
+            data: form_data,
+            success: function(msg) {
+                if (msg == 'Success') {
+                    $('#student-alert-msg').html('<div class="alert alert-success text-center">Section Edited Successfully!</div>');
+                    //Clear Form
+                    $('#student-fname').val('');
+                    $('#student-mname').val('');
+                    $('#student-lname').val('');
+                    $('#section-id').val(0);
+                    setTimeout(function(){// wait for 1 secs
+                        location.reload(); // then reload the page.
+                    }, 1000); 
+                } else if (msg == 'Error') {
+                    $('#student-alert-msg').html('<div class="alert alert-danger text-center">Error in editing section! Please try again later.</div>');
+                    //Clear Form
+                    $('#student-fname').val('');
+                    $('#student-mname').val('');
+                    $('#student-lname').val('');
+                    $('#section-id').val(0);
+                } else {
+                    $('#student-alert-msg').html('<div class="alert alert-danger">' + msg + '</div>');
+                }
+            }
+        });
+        return false;
+    });
+
+    //Remove Student
+    $('#remove-student').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "<?php echo site_url("students/" . $student_details['student_id'] . "/delete"); ?>",
+            type: 'PUT',
+            success: function(msg) {
+                if (msg == 'Success') {
+                    alert('Successful Deleted!');
+                    setTimeout(function(){// wait for 1 secs
+                        location.href = "<?php echo base_url(); ?>dashboard/student";
+                }, 1000); 
+                } else {
+                    alert('Error Occurred! Failed to delete');
+                }
+            }
+        });
+        return ;
     });
 </script>
