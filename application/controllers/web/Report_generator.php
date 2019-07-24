@@ -150,7 +150,7 @@ class Report_generator extends CI_Controller{
     public function render_to_pdf($html_content, $filename)
     {
         $mpdf = new \Mpdf\Mpdf(array(
-            'tempDir' => __DIR__ . '/tmp'
+            'tempDir' => 'vendor/mpdf/mpdf/tmp'
         ));
         $mpdf->SetHTMLHeader('This pdf is generated on ' . date("Y-m-d h:i:sa"));
         $mpdf->WriteHTML($html_content);

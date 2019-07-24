@@ -9,7 +9,6 @@ $(document).ready( function () {
     );
     $('#attendance_table').DataTable(
         {
-            "order": [[ 0, "desc" ]],
             responsive: true
         }
     );

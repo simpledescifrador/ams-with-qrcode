@@ -19,7 +19,6 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
-application/controllers/web/tmp/*
 
 
 ### CodeIgniter Patch ###
