@@ -101,18 +101,18 @@
                                             <th>Name</th>
                                             <th>Section</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach($recent_attendance_records as $rows): ?>
                                             <tr>
-                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo date_format(date_create($rows['date']),"D, M d, Y h:i A");?></td>
                                                 <td><?php echo $rows['student_id']; ?></td>
                                                 <td><?php echo $rows['name']; ?></td>
                                                 <td><?php echo $rows['section']; ?></td>
-                                                <td><?php echo $rows['remarks']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                                <td><?php echo ucfirst($rows['remarks']); ?></td>
+                                                <!-- <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td> -->
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -136,18 +136,18 @@
                                             <th>Name</th>
                                             <th>Section</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach($attendance_records as $rows): ?>
                                             <tr>
-                                                <td><?php echo $rows['date'];?></td>
+                                                <td><?php echo date_format(date_create($rows['date']),"D, M d, Y h:i A");?></td>
                                                 <td><?php echo $rows['student_id']; ?></td>
                                                 <td><?php echo $rows['name']; ?></td>
                                                 <td><?php echo $rows['section']; ?></td>
-                                                <td><?php echo $rows['remarks']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                                <td><?php echo ucfirst($rows['remarks']); ?></td>
+                                                <!-- <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td> -->
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
