@@ -43,5 +43,6 @@ $route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$
 
 //Generate Reports
 $route['generate/students/qrcode/(:any)'] = 'web/report_generator/student_qrcode_to_pdf/$1';
+$route['generate/section/qrcode/(:num)'] = 'web/report_generator/section_qrcode_to_pdf/$1';
 /* END OF API ROUTES */
 

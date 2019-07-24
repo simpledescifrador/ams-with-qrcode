@@ -92,9 +92,9 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#section-qrcode-modal">
+                                <a id="generate-section-qrcode-anchor" class="list-group-item" data-toggle="modal"  data-target="#section-qrcode-modal">
                                     <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
-                                     Generate Qr Code
+                                     Print QR Code's
                                 </a>
                             </div>
                             <div class="col-md-3">

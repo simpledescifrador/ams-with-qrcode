@@ -100,5 +100,13 @@ class Qrcode_model extends CI_Model {
 
     /* --------------- CUSTOM MODEL FUNCTION STARTS HERE ------------------ */
 
-
+    function is_student_qrcode_exist($student_id)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_qrcodes');
+        $this->db->where('student_id', $student_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        return ($query->num_rows() > 0) ? $row->qr_code : false;
+    }
 }

@@ -103,6 +103,11 @@
         var schoolYearValue = "<?php echo $section_details['school_year']; ?>";
         $('#text_schoolYear').val(schoolYearValue);        
     });
+    
+    $('#generate-section-qrcode-anchor').click(function() {
+        var sectionId = "<?php echo $section_details['section_id']; ?>";
+        window.open("<?php echo base_url(); ?>generate/section/qrcode/" + sectionId);
+    });
 
     //Edit Section
     $('#edit-section').click(function() {
