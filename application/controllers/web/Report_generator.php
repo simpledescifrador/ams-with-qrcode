@@ -37,39 +37,20 @@ class Report_generator extends CI_Controller{
         $data['qrcode_details'][] = array(
             'qrcode_path' => $qrcode_path,
             'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $data['qrcode_details'][] = array(
-            'qrcode_path' => $qrcode_path,
-            'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $data['qrcode_details'][] = array(
-            'qrcode_path' => $qrcode_path,
-            'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $data['qrcode_details'][] = array(
-            'qrcode_path' => $qrcode_path,
-            'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $data['qrcode_details'][] = array(
-            'qrcode_path' => $qrcode_path,
-            'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $data['qrcode_details'][] = array(
-            'qrcode_path' => $qrcode_path,
-            'name' => $student_details['first_name'] . ' ' . $student_details['middle_name'] . ' ' . $student_details['last_name']
-        );
-        $this->load->view('report_templates/students_qrcode', $data);
-        $html_content = $this->output->get_output();
-        // $this->render_to_pdf($html_content, 'student' . $qrcode_details['student_id']);
+        ); 
+        $data['title'] = ucfirst("QR Code");
+        $html_content = $this->load->view('report_templates/students_qrcode', $data, true);
+        $this->render_to_pdf($html_content,"QRCODE_" . time() . ".pdf" );
     }
 
-    public function render_to_pdf($html_content, $file_name)
+    public function render_to_pdf($html_content, $filename)
     {
-        $this->pdf->loadHtml($html_content);
-        $this->pdf->setPaper('A4', 'landscape');
-        $this->pdf->setCss(new Stylesheet($this->pdf));
+        $mpdf = new \Mpdf\Mpdf(array(
+            'tempDir' => __DIR__ . '/tmp'
+        ));
+        $mpdf->SetHTMLHeader('This pdf is generated on ' . date("Y-m-d h:i:sa"));
+        $mpdf->WriteHTML($html_content);
 
-        $this->pdf->render();
-        $this->pdf->stream($file_name.".pdf", array("Attachment"=>0));
+        $mpdf->Output($filename, 'I');
     }
 }

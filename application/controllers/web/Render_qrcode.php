@@ -61,8 +61,8 @@ class Render_qrcode extends CI_Controller{
     
                 if ($insert_result) {
                     $params['data'] = json_encode($data);
-                    $params['level'] = 'L';
-                    $params['size'] = 5;
+                    $params['level'] = 'S';
+                    $params['size'] = 3;
                     $params['savename'] = FCPATH . 'uploads/students/qrcode/'. $data['qr_code'] . '.png';
                     $this->ciqrcode->generate($params);
                     $qrcode_url = base_url('uploads/students/qrcode/'. $data['qr_code'] . '.png');

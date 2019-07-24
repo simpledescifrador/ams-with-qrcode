@@ -74,7 +74,7 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                             <img id="student-qrcode-img" src="<?php echo base_url('assets/images/qrcode_placeholder.png'); ?>"/>
-                            <a id="" hidden>Print</a>
+                            <a id="" target="blank" hidden>Print</a>
                             <div class="form-group">
                             <label for="student-qrcode">QR Code:</label>
                             <input type="text" class="form-control" id="text-student-qrcode" readonly>
@@ -112,6 +112,13 @@
             }
         });
         return false;
+    });
+    
+    $("#student-qrcode-print").click(function() {
+        console.log();
+        var qrcode = $("#text-student-qrcode").val();
+
+        window.open("<?php echo base_url(); ?>generate/students/qrcode/" + qrcode, '_blank');
     });
 
     //Edit Student
