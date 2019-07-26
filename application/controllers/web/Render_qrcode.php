@@ -38,7 +38,8 @@ class Render_qrcode extends CI_Controller{
             $data = array(
                 'qr_code' => random_string('alnum', 16),
                 'name' => $student_details['first_name'] . " " . $student_details['last_name'],
-                'section' => $section_details['name']
+                'section' => $section_details['name'],
+                'student_image' => $student_details['profile_image_url']
             );
 
 
