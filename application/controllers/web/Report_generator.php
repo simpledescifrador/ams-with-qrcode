@@ -200,37 +200,37 @@ class Report_generator extends CI_Controller{
         $decRowNum = 15;
 
 
-        foreach ($attendance_data as $key => $value) {
-            $month = date("m",strtotime($value['date']));
-            $day = date("j",strtotime($value['date']));
-            $remark = substr($value['remarks'], 0, 1);
-
-
-
-            $current_row;
-            $current_col = $day + ($startingColNum-1);
-
-            switch ($month) {
-                case '01': $current_row = $janRowNum; break;
-                case '02': $current_row = $febRowNum; break;
-                case '03': $current_row = $marRowNum; break;
-                case '04': $current_row = $aprRowNum; break;
-                case '05': $current_row = $mayRowNum; break;
-                case '06': $current_row = $junRowNum; break;
-                case '07': $current_row = $julRowNum; break;
-                case '08': $current_row = $augRowNum; break;
-                case '09': $current_row = $septRowNum; break;
-                case '10': $current_row = $octRowNum; break;
-                case '11': $current_row = $novRowNum; break;
-                case '12': $current_row = $decRowNum; break;
+        if ($attendance_data) {
+            foreach ($attendance_data as $key => $value) {
+                $month = date("m", strtotime($value['date']));
+                $day = date("j", strtotime($value['date']));
+                $remark = substr($value['remarks'], 0, 1);
+    
+    
+    
+                $current_row;
+                $current_col = $day + ($startingColNum-1);
+    
+                switch ($month) {
+                    case '01': $current_row = $janRowNum; break;
+                    case '02': $current_row = $febRowNum; break;
+                    case '03': $current_row = $marRowNum; break;
+                    case '04': $current_row = $aprRowNum; break;
+                    case '05': $current_row = $mayRowNum; break;
+                    case '06': $current_row = $junRowNum; break;
+                    case '07': $current_row = $julRowNum; break;
+                    case '08': $current_row = $augRowNum; break;
+                    case '09': $current_row = $septRowNum; break;
+                    case '10': $current_row = $octRowNum; break;
+                    case '11': $current_row = $novRowNum; break;
+                    case '12': $current_row = $decRowNum; break;
+                }
+                
+                $sheet->getCellByColumnAndRow($current_col, $current_row)->setValue($remark);
             }
-            
-            $sheet->getCellByColumnAndRow($current_col, $current_row)->setValue($remark);
-
         }
-
-        $this->createExcel($spreadsheet, str_replace(' ', '', strtolower($student_name)) . "_attendance" . "_" . $year .".xlsx");
         
+        $this->createExcel($spreadsheet, str_replace(' ', '', strtolower($student_name)) . "_attendance" . "_" . $year .".xlsx");
     }
 
     public function createExcel($spreadsheet, $filename)
