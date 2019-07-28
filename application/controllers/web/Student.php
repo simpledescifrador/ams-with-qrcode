@@ -103,8 +103,37 @@ class Student extends CI_Controller{
         $sections = $this->section_model->get();
         $data['sections'] = $sections;
 
+        $this->load->model('student_model');
+        $this->load->model('attendance_model');
+        $this->load->model('qrcode_model');
+        
+        $qrcode_con['returnType'] = 'single';
+        $qrcode_con['conditions'] = array(
+            'student_id' => $student_id
+        );
+
+        $qrcode_data = $this->qrcode_model->get($qrcode_con);
+
+        if ($qrcode_data) {
+            $attendance_con['conditions'] = array(
+                'qr_code' => $qrcode_data['qr_code']
+            );
+    
+            $attendance_data = $this->attendance_model->get($attendance_con);
+
+            if ($attendance_data) {
+                foreach ($attendance_data as $key => $value) {
+                    $data['attendance_records'][$key]['id'] = $value['attendance_id'];
+                    $data['attendance_records'][$key]['date'] = $value['date'];
+                    $data['attendance_records'][$key]['remarks'] = $value['remarks'];
+                }
+            } else {
+                $data['attendance_records'] = array();
+            }
+        }
+
         $this->load->view('dashboard/header', $data);
-        $this->load->view('dashboard/student_profile', $data);   
+        $this->load->view('dashboard/student_profile', $data);
         $this->load->view('dashboard/footers/dashboard_footer');
         $this->load->view('dashboard/footers/student_profile_footer', $data);
 
