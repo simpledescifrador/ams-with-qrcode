@@ -11,7 +11,117 @@ class Report_generator extends CI_Controller{
     {
         parent::__construct();
         $this->load->library('pdf');
+    }
+    
+
+    public function monthly_section_attendance($section_id)
+    {
+        $month = $this->input->get('month');
+        $year = $this->input->get('year');
+
+        $this->load->model('student_model');
+        $this->load->model('section_model');
+        $this->load->model('attendance_model');
+        $this->load->model('qrcode_model');
+        $this->load->model('school_year_model');
+
+        // Get Section Data
+        $section_data = $this->section_model->get(array('id' => $section_id));
+        $sy_data = $this->school_year_model->get(array('id' => $section_data['sy_id']));
+
+        $spreadsheet = IOFactory::load("assets/templates/monthly-class-attendance-template.xlsx");
+        // Retrieve the current active worksheet
+        $sheet = $spreadsheet->getActiveSheet();
+
+        //Set attendance year & month
+        $sheet->setCellValue('AD3', $year);
+        $sheet->setCellValue('AD2', ucfirst($month));
+
+        //Set Section
+        $sheet->setCellValue('C2', $section_data['name']);
+        //Set School Year
+        $sheet->setCellValue('O2', $sy_data['school_year']);
+
+        //Get Students
+        $student_con['conditions'] = array(
+            'section_id' => $section_id
+        );
+        $student_data = $this->student_model->get($student_con);
         
+        //Sort Student Data LastName by ASC
+        usort($student_data, function ($name1, $name2) {
+            return $name1['last_name'] <=> $name2['last_name'];
+        });
+
+        $start_name_col = "C";
+        $start_id_col = "B";
+
+
+        foreach ($student_data as $key => $value) {
+            $current_row = $key+8;
+            $student[$key] = array(
+                'student_id' => $value['student_id'],
+                'student_name' => $value['last_name'] . ", " . $value['first_name'] . " " . $value['middle_name']
+            );
+
+            //Set Student ID
+            $sheet->setCellValue($start_id_col . $current_row, $student[$key]['student_id']);
+            //Set Student Name
+            $sheet->setCellValue($start_name_col . $current_row, $student[$key]['student_name']);
+
+            //Set Attendance
+            //Get Qrcode id
+            $qrcode_con['returnType'] = 'single';
+            $qrcode_con['conditions'] = array(
+                'student_id' =>  $value['student_id']
+            );
+
+            $qrcode_data = $this->qrcode_model->get($qrcode_con);
+            $qr_code = $qrcode_data['qr_code'];
+
+            
+            $nmonth = date("n", strtotime($month));
+            
+            if ($nmonth != 12) {
+                // Start date
+                $start_date = $year . '-' . $nmonth .'-01 00:00:00';
+                // End date
+                $end_date = $year . '-' . ($nmonth+1) .'-01 00:00:00';
+            } else {
+                // Start date
+                $start_date = $year . '-' . $nmonth .'-01 00:00:00';
+                // End date
+                $end_date = ($year+1) . '-01-01 00:00:00';
+            }
+            
+            //Get Attendance
+            $attendance_con['conditions'] = array(
+                'qr_code' => $qr_code,
+                'date >=' => $start_date,
+                'date <' => $end_date
+            );
+
+            $attendance_data = $this->attendance_model->get($attendance_con);
+
+            $start_attendance_col_num = 5;
+
+            if ($attendance_data) {
+                //Set Attendance
+                foreach ($attendance_data as $key => $value) {
+                    $day = date("j", strtotime($value['date']));
+                    $remark = substr($value['remarks'], 0, 1);
+
+                    $current_col = $day + ($start_attendance_col_num-1);
+
+                    $sheet->getCellByColumnAndRow($current_col, $current_row)->setValue($remark);
+                }
+            } else {
+                continue;
+            }
+
+        }
+
+        $this->createExcel($spreadsheet, "section-" . $section_data['name'] . "-attendance" . "-of-" . $month . "-" . $year .".xlsx");
     }
 
     public function student_attendance($student_id)
