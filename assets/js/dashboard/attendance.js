@@ -7,9 +7,4 @@ $(document).ready( function () {
             "searching": false
         }
     );
-    $('#attendance_table').DataTable(
-        {
-            responsive: true
-        }
-    );
 } );

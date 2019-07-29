@@ -219,7 +219,6 @@
     </div>
   </div>
 </div>
-<script src="<?php echo base_url(); ?>vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
     $(document).ready( function () {
         var attendanceTable = $('#student-attendance-table').DataTable(

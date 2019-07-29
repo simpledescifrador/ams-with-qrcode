@@ -37,10 +37,12 @@
 
 <!-- Bootstrap core JavaScript--> 
 <script src="<?php echo base_url() ;?>assets/js/jquery.min.js"></script>
+<!-- JQuery UI -->
+<script src="<?php echo base_url() ;?>vendor/components/jqueryui/jquery-ui.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
 <script src="<?php echo base_url() ;?>assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
+<script src="<?php echo base_url(); ?>vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript">
     /* Change Password AJAX */
     $('#change-password').click(function() {

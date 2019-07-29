@@ -118,6 +118,7 @@ class Dashboard extends CI_Controller{
                     $recent_attendance = $this->attendance_model->recent_attendance();
                     if ($recent_attendance) {
                         foreach ($recent_attendance as $key => $value) {
+                            $data['recent_attendance_records'][$key]['id'] = $value['attendance_id'];
                             $data['recent_attendance_records'][$key]['date'] = $value['date'];
                             $data['recent_attendance_records'][$key]['remarks'] = $value['remarks'];
 
@@ -135,6 +136,7 @@ class Dashboard extends CI_Controller{
                     
                     if ($attendance_records) {
                         foreach ($attendance_records as $key => $value) {
+                            $data['attendance_records'][$key]['id'] = $value['attendance_id'];
                             $data['attendance_records'][$key]['date'] = $value['date'];
                             $data['attendance_records'][$key]['remarks'] = $value['remarks'];
 

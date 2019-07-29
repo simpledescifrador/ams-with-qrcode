@@ -14,6 +14,9 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url() ;?>assets/css/dashboard.css">
         <!-- Bootstrap DateTimepciker CSS -->
         <?php echo link_tag("vendor/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"); ?>
+
+        <!-- JQuery UI Theme -->
+        <?php echo link_tag('vendor/components/jqueryui/themes/smoothness/jquery-ui.min.css'); ?>
         <title><?php echo $title; ?></title>
     </head>
 

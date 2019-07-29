@@ -16,30 +16,39 @@ class Attendance extends CI_Controller {
         $student_id = $this->input->post('student_id');
         $remark = $this->input->post('remark');
         
+        $this->load->model('student_model');
+        $student_data = $this->student_model->get(array('id' => $student_id));
 
-        //Get Qrcode
-        $qrcode_con['returnType'] = 'single';
-        $qrcode_con['conditions'] = array(
-            'student_id' => $student_id
-        );
-
-        $this->load->model('qrcode_model');
-        $qrcode_data = $this->qrcode_model->get($qrcode_con);
-    
-        $insert_result = $this->attendance_model->insert(
-            array(
-                'qr_code' => $qrcode_data['qr_code'],
-                'date' => date("Y-m-d H:i:s"),
-                'status' => "",
-                'remarks' => $remark
-            )
-        );
-
-        if ($insert_result) {
-            echo "Success";
+        if (empty($student_id)) {
+            echo "Please enter the student id";
+        } else if (!$student_data) {
+            echo "Invalid student id";
         } else {
-            echo "Error";
+            //Get Qrcode
+            $qrcode_con['returnType'] = 'single';
+            $qrcode_con['conditions'] = array(
+                'student_id' => $student_id
+            );
+
+            $this->load->model('qrcode_model');
+            $qrcode_data = $this->qrcode_model->get($qrcode_con);
+        
+            $insert_result = $this->attendance_model->insert(
+                array(
+                    'qr_code' => $qrcode_data['qr_code'],
+                    'date' => date("Y-m-d H:i:s"),
+                    'status' => "",
+                    'remarks' => $remark
+                )
+            );
+
+            if ($insert_result) {
+                echo "Success";
+            } else {
+                echo "Error";
+            }
         }
+        
     }
 
     public function edit_attendance($attendance_id)

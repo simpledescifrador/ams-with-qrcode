@@ -186,4 +186,22 @@ class Student extends CI_Controller{
             echo "Error";
         }
     }
+
+    public function get_student_names()
+    {
+        $query = $this->input->get('query');
+        
+
+        $student_data = $this->student_model->get_like_names($query);
+
+        $names = array();
+        foreach ($student_data as $key => $value) {
+            $names[$key] = array(
+                'student_id' => $value['student_id'],
+                'name' => $value['first_name'] . " " . $value['middle_name'] . " ". $value['last_name']
+            );
+        }
+
+        echo json_encode($names);
+    }
 }
