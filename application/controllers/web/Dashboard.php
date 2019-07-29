@@ -5,6 +5,9 @@ class Dashboard extends CI_Controller{
 
     public function page($slug = 'dashboard') 
     {
+
+        date_default_timezone_set("Asia/Manila");
+
         if (isset($this->session->userdata['logged_in'])) {
 
             //Load Login View
@@ -28,9 +31,39 @@ class Dashboard extends CI_Controller{
                     $student_count = $this->student_model->get($student_con); //Get Student
                     $data['student_count'] = $student_count;
                     
-                    //Show dashboard View
+
+                    //Get Lates and absent totals
+                    $end_date = Date('Y-m-d');
+                    $start_date = Date('Y-m-d', strtotime("-9 days"));
+
+                    $this->load->model('attendance_model');
+                    
+                    $late = array();
+                    $absent = array();
+                    
+                    for ($i=0; $i < 10; $i++) {
+                        $date = Date('Y-m-d', strtotime("-" . $i . " days"));
+                        
+                        $late_count = $this->attendance_model->get_late_count($date);
+                        $absent_count = $this->attendance_model->get_absent_count($date);
+
+                        $late[] = array(
+                            't' => $date,
+                            'y' => $late_count
+                        );
+                    
+                        $absent[] = array(
+                            't' => $date,
+                            'y' => $absent_count
+                        );
+                    }
+                    
+                    $data['late'] = json_encode($late);
+                    $data['absent'] = json_encode($absent);
+
+                    // //Show dashboard View
                     $this->load->view('dashboard/header', $data);
-                    $this->load->view('dashboard/home', $data);   
+                    $this->load->view('dashboard/home', $data);
                     $this->load->view('dashboard/footers/dashboard_footer');
                     $this->load->view('dashboard/footers/home_footer', $data);
                     break;

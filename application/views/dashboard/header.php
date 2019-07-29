@@ -15,8 +15,14 @@
         <!-- Bootstrap DateTimepciker CSS -->
         <?php echo link_tag("vendor/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"); ?>
 
+<<<<<<< HEAD
         <!-- JQuery UI Theme -->
         <?php echo link_tag('vendor/components/jqueryui/themes/smoothness/jquery-ui.min.css'); ?>
+=======
+        <!-- Chart JS Defult css -->
+        <?php echo link_tag("assets/vendor/chartjs/css/default.css"); ?>
+
+>>>>>>> dashboard-analytics
         <title><?php echo $title; ?></title>
     </head>
 
