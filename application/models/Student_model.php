@@ -107,4 +107,13 @@ class Student_model extends CI_Model {
         //return the status
         return $update_result ? true : false;
     }
+
+    function get_like_names($query)
+    {
+        $sql = "SELECT * FROM `tbl_students` WHERE CONCAT(TRIM(`first_name`), ' ', TRIM(`middle_name`) , ' ', TRIM(`last_name`)) LIKE '%". $query . "%'";
+        $query = $this->db->query($sql);
+
+        return ($query->num_rows() > 0) ? $query->result_array() : array();
+    }
+
 }

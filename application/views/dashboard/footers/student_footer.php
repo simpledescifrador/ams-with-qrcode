@@ -14,7 +14,13 @@
                         <img id="student-profile-img" src="" width="200" style="display:none;" /> <br />
                         <small>*Optional</small>
                         <input type="file" id="student-profile-image" name="profile-image"accept="image/*">
-                        <a href="#" class="help-block">Click here to use WebCam</a>
+                        <a id="use-webcam" class="help-block">Click here to use WebCam</a>
+                        <div class="web-cam" hidden>
+                            <br>
+                            <div id="my_camera"></div>
+                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                            <div id="results" ></div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="fnameStudent">First Name</label>
@@ -47,7 +53,8 @@
         </div>
     </div>
 </div>
-
+<!-- Load Webcam JS -->
+<script src="<?php echo base_url() ;?>assets/js/webcam.min.js"></script>
 <script src="<?php echo base_url() ;?>assets/js/dashboard/student.js"></script>
 
 <script type="text/javascript">
@@ -62,7 +69,12 @@
         var tmppath = URL.createObjectURL(event.target.files[0]);
         $("#student-profile-img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
     });
-    
+
+    // $('#use-webcam').click(function() {
+    //     $('.web-cam').removeAttr('hidden');
+    //     $('#use-webcam').addClass('hidden');
+    // });
+
     /* ADD STUDENT AJAX */
     $('#add-student-form').on('submit', function(e) {
         e.preventDefault();

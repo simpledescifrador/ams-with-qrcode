@@ -12,7 +12,11 @@
         <?php echo link_tag('assets/vendor/DataTables-1.10.18/css/dataTables.bootstrap.min.css'); ?>
         <!--Custom CSS-->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url() ;?>assets/css/dashboard.css">
+        <!-- Bootstrap DateTimepciker CSS -->
+        <?php echo link_tag("vendor/components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"); ?>
 
+        <!-- JQuery UI Theme -->
+        <?php echo link_tag('vendor/components/jqueryui/themes/smoothness/jquery-ui.min.css'); ?>
         <title><?php echo $title; ?></title>
     </head>
 

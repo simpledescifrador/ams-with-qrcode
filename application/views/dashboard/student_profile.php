@@ -135,22 +135,44 @@
                                 </div>
                             </div>
                         </div><br /><hr />
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Attendance Record</h3>
+                        <div class="col-md-12">
+                            <div class="panel panel-default center-block">
+                                    <div class="panel-heading clearfix">
+                                        <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Attendance</h4>
+                                        <div class="btn-group pull-right">
+                                        <a class="btn btn-success outline" data-toggle="modal" data-target="#add-attendance-modal">Add Attendance</a>
+                                        <a class="btn btn-primary outline" data-toggle="modal" data-target="#generate-report-modal">Generate Student Report</a>
+                                        </div>
                                     </div>
                                     <div class="panel-body">
-                                        <table class="table table-striped table-hover">
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Attendance</th>
-                                            </tr>
+                                        <input type="text" class="hidden" id="selected-id">
+                                        <table id="student-attendance-table" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Date</th>
+                                                    <th>Remark</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($attendance_records as $rows) : ?>
+                                                    <tr>
+                                                        <td><?php echo $rows['id'];?></td>
+                                                        <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A"); ?></td>
+                                                        <td><?php echo $rows['remarks']; ?></td>
+                                                        <td><div class="btn-group" role="group">
+                                                            <button id=""type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-attendance-modal">Edit</button>
+                                                            <button id="delete-action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-attendance-modal">Delete</button>
+                                                        </div></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Recitation Record</h3>
@@ -164,7 +186,7 @@
                                         </table>
                                     </div>
                                 </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /Overview -->
                 </div>

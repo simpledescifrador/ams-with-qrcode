@@ -97,22 +97,19 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Date & Time</th>
-                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Section</th>
                                             <th>Remarks</th>
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach($recent_attendance_records as $rows): ?>
                                             <tr>
-                                                <td><?php echo $rows['date'];?></td>
-                                                <td><?php echo $rows['student_id']; ?></td>
+                                                <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
                                                 <td><?php echo $rows['name']; ?></td>
                                                 <td><?php echo $rows['section']; ?></td>
-                                                <td><?php echo $rows['remarks']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                                <td><?php echo ucfirst($rows['remarks']); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -121,18 +118,20 @@
                         </div>
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Attendance Record</h3>
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Attendance Record</h4>
+                                <div class="btn-group pull-right">
+                                <a class="btn btn-success outline" data-toggle="modal" data-target="#add-attendance-modal">Add Attendance</a>
+                                </div>
                             </div>
                             <div class="panel-body">
-                                <table class="table table-striped table-hover">
-
-                                </table>
+                                <input type="text" class="hidden" id="selected-id">
+                                <input type="text" class="hidden" id="student-id">
                                 <table id="attendance_table" class="table table-striped table-bordered" style="width:100%">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th>#</th>
                                             <th>Date & Time</th>
-                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Section</th>
                                             <th>Remarks</th>
@@ -140,14 +139,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($attendance_records as $rows): ?>
+                                        <?php foreach ($attendance_records as $rows) : ?>
                                             <tr>
-                                                <td><?php echo $rows['date'];?></td>
-                                                <td><?php echo $rows['student_id']; ?></td>
+                                                <td><?php echo $rows['id']; ?></td>
+                                                <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
                                                 <td><?php echo $rows['name']; ?></td>
                                                 <td><?php echo $rows['section']; ?></td>
-                                                <td><?php echo $rows['remarks']; ?></td>
-                                                <td><button type="button" class="btn btn-sm main-color-bg attendance_view_details" >View Details</button></td>
+                                                <td><?php echo ucfirst($rows['remarks']); ?></td>
+                                                <td><div class="btn-group" role="group">
+                                                    <button id=""type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-attendance-modal">Edit</button>
+                                                    <button id="delete-action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-attendance-modal">Delete</button>
+                                                </div></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

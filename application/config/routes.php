@@ -38,6 +38,11 @@ $route['students/(:num)/edit'] = 'web/student/edit_student_details/$1';
 $route['students/(:num)/delete'] = 'web/student/remove_student/$1';
 $route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
 
+//Attendance Controller Routes
+$route['attendance/new'] = 'web/attendance/new_attendance';
+$route['attendance/(:num)/edit'] = 'web/attendance/edit_attendance/$1';
+$route['attendance/(:num)/delete'] = 'web/attendance/remove_attendance/$1';
+
 //Render Qrcodes Routes
 $route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$1';
 

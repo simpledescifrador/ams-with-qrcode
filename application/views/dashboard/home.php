@@ -85,8 +85,8 @@
                             </a>
                         </div>
                         <div class="well"> 
-                            <h4>Time</h4> 
-                            <p>00:00:00 AM</p>
+                            <h4>Current Time</h4> 
+                            <strong><h2 class="live-time"><</h2></strong>
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
