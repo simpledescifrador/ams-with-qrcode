@@ -108,4 +108,22 @@ class Attendance_model extends CI_Model {
         $query = $this->db->get();
         return ($query->num_rows() > 0) ? $query->result_array() : false;
     }
+
+    function get_late_count($date)
+    {
+        $sql = "SELECT * FROM `tbl_attendance` WHERE `date` LIKE '". $date ."%' AND `remarks` IN ('Tardy')";
+
+        $query = $this->db->query($sql);
+
+        return $query->num_rows();
+    }
+
+    function get_absent_count($date)
+    {
+        $sql = "SELECT * FROM `tbl_attendance` WHERE `date` LIKE '". $date ."%' AND `remarks` IN ('Unexcused', 'Excused')";
+
+        $query = $this->db->query($sql);
+
+        return $query->num_rows();
+    }
 }

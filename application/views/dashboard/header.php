@@ -13,6 +13,9 @@
         <!--Custom CSS-->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url() ;?>assets/css/dashboard.css">
 
+        <!-- Chart JS Defult css -->
+        <?php echo link_tag("assets/vendor/chartjs/css/default.css"); ?>
+
         <title><?php echo $title; ?></title>
     </head>
 
