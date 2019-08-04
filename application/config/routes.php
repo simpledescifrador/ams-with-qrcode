@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-$route['default_controller'] = 'login';//index page ng site
+$route['default_controller'] = 'main';//index page ng site
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -42,6 +42,7 @@ $route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
 $route['attendance/new'] = 'web/attendance/new_attendance';
 $route['attendance/(:num)/edit'] = 'web/attendance/edit_attendance/$1';
 $route['attendance/(:num)/delete'] = 'web/attendance/remove_attendance/$1';
+$route['dashboard/attendance/view'] = 'web/attendance/view_attendance';
 
 //Render Qrcodes Routes
 $route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$1';

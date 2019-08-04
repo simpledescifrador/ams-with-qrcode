@@ -12,17 +12,12 @@
       <div class="modal-body">
             <form>
                 <div class="form-group">
-                    <label for="text_studentIde">Student ID:</label>
-                    <input id="text_studentId" type="text" class="form-control" name="text_studentId" placeholder="Enter student ID">
+                    <label for="text_studentIde">Student Name</label>
+                    <input id="text_studentName" type="text" class="form-control" name="text_studentName" readonly>
                 </div>
                 <div class="form-group">
                     <label for="date">Date:</label>
-                        <div class='input-group date default-date-picker' id='add-attendance-dp'>
-                            <input type='text' class="form-control" readonly id="add-attendance-date" value="<?php echo date("D, M d, Y h:i A", strtotime(date('y-m-d h:i:s'))); ?>">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+                    <input type='text' class="form-control" readonly id="add-attendance-date" value="<?php echo date("D, M d, Y", strtotime($attendance_date)); ?>">
                 </div>
                 <div class="form-group">
                     <label for="text_remark">Remark</label>
@@ -63,7 +58,7 @@
                 <div class="form-group">
                     <label for="date">Date</label>
                         <div class='input-group date default-date-picker' id='edit-attendance-dp'>
-                            <input type='text' class="form-control" readonly id="edit-date"/>
+                            <input type='text' class="form-control" readonly id="edit-date" value="<?php echo date("D, M d, Y", strtotime($attendance_date)); ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -109,70 +104,35 @@
     </div>
   </div>
 </div>
-
-<!-- View Attendance Modal -->
-<div class="modal fade" id="view-attendance-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">View Attendance</h4>
-      </div>
-      <div id="view-attendance-alert-msg"></div>
-      <div class="modal-body">
-            <form id="view-attendance-form" method="get" action="<?php echo site_url("dashboard/attendance/view"); ?>">
-                <div class="form-group">
-                    <label for="section-id">Section</label>
-                    <select class="form-control" id="section-id" name="section-id">
-                            <option value="0">Select Section</option>
-                            <?php foreach ($sections as $value) {
-                                echo "<option value='{$value['section_id']}'>{$value['name']}</option>";
-                            }
-                            ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                  <label for="">Date</label>
-                    <div class='input-group date view-date-picker' id='edit-attendance-dp'>
-                            <input type='text' name="date" class="form-control" placeholder="YYYY-MM-DD" id="view-date" required/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                      </div>
-                </div>
-                
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="view-attendance-btn" type="submit" class="btn btn-success">Submit</button>
-      </div>
-      </form> 
-    </div>
-  </div>
-</div>
-<script src="<?php echo base_url(); ?>vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<?php echo base_url() ;?>assets/js/dashboard/attendance.js"></script>
-
 <script type="text/javascript">
     $(document).ready( function () {
-        var attendanceTable = $('#attendance_table').DataTable(
+        var attendanceTable = $('#view_attendance_table').DataTable(
             {
                 responsive: true,
+                "order": [[ 1, "asc" ]],
+                "columnDefs": [
+                    { "width": "20%", "targets": 4 },
+                    { "width": "15%", "targets": 3 },
+                    { "width": "20%", "targets": 2 },
+                    {
+                        "targets": [ 2, 0 ],
+                        "visible": false
+                    }
+                ],
                 "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-                "iDisplayLength": 5
+                "iDisplayLength": -1
             }
         );
+
         //get Selected row id
-        $('#attendance_table tbody').on( 'click', 'tr', function () {
+        $('#view_attendance_table tbody').on( 'click', 'tr', function () {
             var selectedRow = attendanceTable.row( this ).data();
-            $("#selected-id").val(selectedRow[0]);
-            $("#edit-date").val(selectedRow[1]);
-            $("#edit-student-name").val(selectedRow[2]);
-            var remark = $($.parseHTML(selectedRow[4])).text();
+            $("#selected-id").val(selectedRow[2]);
+            $("#student-id").val(selectedRow[0]);
+            $("#text_studentName").val(selectedRow[1]);
+            $("#edit-student-name").val(selectedRow[1]);
+            var remark = $($.parseHTML(selectedRow[3])).text();
             $("#text_editRemark").val(remark);
-            
         } );
 
     } );
@@ -181,7 +141,7 @@
     $("#add-attendance-btn").click(function(e) {
         e.preventDefault();
         var form_data = {
-            student_id: $("#text_studentId").val(),   
+            student_id: $("#student-id").val(),   
             date: $("#add-attendance-date").val(),         
             remark: $('#text_remark').val()
         };
@@ -269,30 +229,9 @@
         });
         return ;
     });
-
-    $("#view-attendance-form").submit(function(e) {
-      var sectionId = $("#section-id").val();
-      var date = $("#view-date").val();
-      if (sectionId == 0) {
-        e.preventDefault();
-        var msg = "Select section";
-        $('#view-attendance-alert-msg').html('<div class="alert alert-danger">' + msg + '</div>');
-      } else if (!isValidDate(date)) {
-        e.preventDefault();
-        var msg = "Invalid Date";
-        $('#view-attendance-alert-msg').html('<div class="alert alert-danger">' + msg + '</div>');
-      }
-    });
-
     //Default Date input date picker
     $('.default-date-picker').datetimepicker({
         format: 'D, M d, yyyy HH:ii P',
-        todayBtn: "linked",
-        autoclose: true
-    });
-
-    $('.view-date-picker').datetimepicker({
-        format: 'yyyy-mm-dd',
         todayBtn: "linked",
         autoclose: true
     });

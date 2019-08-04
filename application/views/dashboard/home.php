@@ -137,16 +137,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Top 5 Present</h3>
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Top 5 Performing Section</h4>
+                                <div class="btn-group pull-right">
+                                    <div class="btn-group input-group-sm display-option">
+                                        <span class="btn btn-default btn-sm active">This Month</span>
+                                        <span class="btn btn-default btn-sm">This Year</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <table class="table table-striped table-hover">
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Present</th>
-                                        <th>Late</th>
-                                        <th>Absent</th>
+                                        <th>Section</th>
                                     </tr>
                                 </table>
                             </div>
@@ -154,16 +157,21 @@
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Top 5 Tardy</h3>
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Most Punctual Students</h4>
+                                <div class="btn-group pull-right">
+                                    <div class="btn-group input-group-sm display-option">
+                                        <span class="btn btn-default btn-sm active">This Month</span>
+                                        <span class="btn btn-default btn-sm">This Year</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <table class="table table-striped table-hover">
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Present</th>
-                                        <th>Late</th>
-                                        <th>Absent</th>
+                                        <th>#</th>
+                                        <th>Student Name</th>
+                                        <th># of Late</th>
                                     </tr>
                                 </table>
                             </div>

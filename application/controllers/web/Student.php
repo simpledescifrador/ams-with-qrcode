@@ -130,13 +130,113 @@ class Student extends CI_Controller{
             } else {
                 $data['attendance_records'] = array();
             }
+        } else {
+            //Check if student qrcode exist
+            $is_exist = $this->qrcode_model->is_student_qrcode_exist($student_id);
+            if($is_exist) {
+                //Get Qrcode
+                $qrcode = $is_exist;
+            } else {
+                //Generate for qrcode
+                $this->load->library('ciqrcode');
+                if (!is_dir('uploads/students/qrcode/')) {
+                    mkdir('uploads/students/qrcode/', 0777, TRUE);
+                }
+                $student_con['returnType'] = 'single';
+                $student_con['conditions'] = array(
+                    'student_id' => $student_id
+                );
+    
+                $student_details = $this->student_model->get($student_con);
+    
+                $section_con['returnType'] = 'single';
+                $section_con['conditions'] = array(
+                    'section_id' => $student_details['section_id']
+                );
+    
+                $section_details = $this->section_model->get($section_con);
+    
+                $this->load->helper('string');
+                $data = array(
+                    'qr_code' => random_string('alnum', 16),
+                    'name' => $student_details['first_name'] . " " . $student_details['last_name'],
+                    'section' => $section_details['name'],
+                    'student_image' => $student_details['profile_image_url']
+                );
+                
+                //Insert New
+                $qrcode_data = array(
+                    'qr_code' => $data['qr_code'],
+                    'student_id' => $student_id,
+                    'status' => 1
+                );
+                $insert_result = $this->qrcode_model->insert($qrcode_data);
+
+                $params['data'] = json_encode($data);
+                $params['level'] = 'S';
+                $params['size'] = 3;
+                $params['savename'] = FCPATH . 'uploads/students/qrcode/'. $data['qr_code'] . '.png';
+                $this->ciqrcode->generate($params);
+                $qrcode_url = base_url('uploads/students/qrcode/'. $data['qr_code'] . '.png');
+                $output = array(
+                    'qrCode' => $data['qr_code'],
+                    'qrCodeUrl' => $qrcode_url
+                );
+
+                $qrcode = $output['qrCode'];
+
+                $attendance_con['conditions'] = array(
+                    'qr_code' => $qrcode
+                );
+        
+                $attendance_data = $this->attendance_model->get($attendance_con);
+                $data['title'] = ucfirst('Student Profile | Attendance Monitoring System');
+                $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
+        
+                $this->load->model('section_model');
+                $student_con['returnType'] = 'single';
+                $student_con['conditions'] = array(
+                    'student_id' => $student_id
+                );
+                
+                $student_details = $this->student_model->get($student_con);
+                $section_con['returnType'] = 'single';
+                $section_con['conditions'] = array(
+                    'section_id' => $student_details['section_id']
+                );
+                $section = $this->section_model->get($section_con);
+                $data['student_details'] = array(
+                    'student_id' => $student_details['student_id'],
+                    'student_name' => $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'],
+                    'section' => array(
+                        'id' => $section['section_id'],
+                        'name' => $section['name']
+                    ),
+                    'profile_image_url' => $student_details['profile_image_url']
+                );
+        
+                $data['student_details']['name'] = array(
+                    'fname' => $student_details['first_name'],
+                    'mname' => $student_details['middle_name'],
+                    'lname' => $student_details['last_name']
+                );
+                
+                if ($attendance_data) {
+                    foreach ($attendance_data as $key => $value) {
+                        $data['attendance_records'][$key]['id'] = $value['attendance_id'];
+                        $data['attendance_records'][$key]['date'] = $value['date'];
+                        $data['attendance_records'][$key]['remarks'] = $value['remarks'];
+                    }
+                } else {
+                    $data['attendance_records'] = array();
+                }
+            }
         }
 
         $this->load->view('dashboard/header', $data);
         $this->load->view('dashboard/student_profile', $data);
         $this->load->view('dashboard/footers/dashboard_footer');
         $this->load->view('dashboard/footers/student_profile_footer', $data);
-
     }
 
     public function edit_student_details($student_id)

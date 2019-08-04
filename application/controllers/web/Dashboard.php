@@ -31,11 +31,6 @@ class Dashboard extends CI_Controller{
                     $student_count = $this->student_model->get($student_con); //Get Student
                     $data['student_count'] = $student_count;
                     
-
-                    //Get Lates and absent totals
-                    $end_date = Date('Y-m-d');
-                    $start_date = Date('Y-m-d', strtotime("-9 days"));
-
                     $this->load->model('attendance_model');
                     
                     $late = array();
@@ -60,6 +55,10 @@ class Dashboard extends CI_Controller{
                     
                     $data['late'] = json_encode($late);
                     $data['absent'] = json_encode($absent);
+
+
+                    //Get Most Punctual Students
+                    
 
                     // //Show dashboard View
                     $this->load->view('dashboard/header', $data);
@@ -145,6 +144,8 @@ class Dashboard extends CI_Controller{
                     $this->load->model('student_model');
                     $this->load->model('attendance_model');
                     $this->load->model('qrcode_model');
+                    $sections = $this->section_model->get();
+                    $data['sections'] = $sections;
                     
 
                     $attendance_records = $this->attendance_model->get();
@@ -203,7 +204,7 @@ class Dashboard extends CI_Controller{
 
             
         } else {
-            redirect('login','refresh'); // Login First
+            redirect('login', 'refresh'); // Login First
         }  
     }
 

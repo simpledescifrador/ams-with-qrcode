@@ -4,6 +4,15 @@
 <script src="<?php echo base_url() ;?>assets/js/dashboard/home.js"></script>
 <script>
 $(document).ready(function() {
+
+    $('.display-option').on('click', '.btn', toggleOne);
+    function toggleOne() {
+      var toggle_class = 'active'
+        , $that = $(this);
+      $that.parent().find('.btn').removeClass(toggle_class);
+      $that.addClass(toggle_class);
+    }
+
     window.chartColors = {
       red: 'rgb(255, 99, 132)',
       orange: 'rgb(255, 159, 64)',

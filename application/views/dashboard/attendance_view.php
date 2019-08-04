@@ -51,7 +51,8 @@
             <div class="container">
                 <ol class="breadcrumb">
                     <li><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-                    <li class="active">Attendance</li>
+                    <li>Attendance</li>
+                    <li class="active">View</li>
                 </ol>
             </div>
         </section>
@@ -77,7 +78,7 @@
                             </a>
                             <a href="<?php echo base_url() ;?>dashboard/attendance" class="list-group-item active main-color-bg">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
-                                    Attendance
+                                    Attendance  <small> -  View</small>
                             </a>
                             <a href="<?php echo base_url() ;?>dashboard/recitation" class="list-group-item">
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
@@ -87,102 +88,52 @@
                     </div>
                     <!-- /Sdie Nav -->
                     <!-- Overview -->
-                    <div>
-                        <div class="col-md-2">
-                            <a href="#" class="list-group-item success-btn" data-toggle="modal"  data-target="#view-attendance-modal">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                 View Attendance
-                            </a>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" class="list-group-item main-color-bg" data-toggle="modal"  data-target="#mark-attendance-modal">
-                                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                 Generate Report
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-9"><br/> 
+                    <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Recently Added Attendance <small>(Last 5 records)</small></h3>
-                            </div>
-                            <div class="panel-body">
-                                <table id="recent_attendance_table" class="table table-striped table-bordered" style="width:100%">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date & Time</th>
-                                            <th>Name</th>
-                                            <th>Section</th>
-                                            <th>Remarks</th>
-                                            <!-- <th>Action</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach($recent_attendance_records as $rows): ?>
-                                            <tr>
-                                                <td><?php echo $rows['id']; ?></td>
-                                                <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
-                                                <td><?php echo $rows['name']; ?></td>
-                                                <td><?php echo $rows['section']; ?></td>
-                                                <td>
-                                                    <?php 
-                                                        switch ($rows['remarks']) {
-                                                            case "Tardy":
-                                                                echo "<span class='label label-warning'>Tardy</span>";
-                                                                break;
-                                                            case "Unexcused":
-                                                                echo "<span class='label label-danger'>Unexcused</span>";
-                                                                break;
-                                                            case "Excused":
-                                                                echo "<span class='label label-primary'>Excused</span>";
-                                                                break;
-                                                            case "Present":
-                                                                echo "<span class='label label-success'>Present</span>";
-                                                                break;
-                                                        }
-                                                    ?>
-                                                </td> 
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading clearfix">
-                                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Attendance Records</h4>
-                                <div class="btn-group pull-right">
-                                <a class="btn btn-success outline" data-toggle="modal" data-target="#add-attendance-modal">Add Attendance</a>
-                                </div>
+                                <h3 class="panel-title pull-left"><?php echo $panel_title; ?></h3>
+                                <h3 class="panel-title pull-right"><?php echo date_format(date_create($attendance_date), "D, M d, Y"); ?></h3>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
                                 <input type="text" class="hidden" id="selected-id">
                                 <input type="text" class="hidden" id="student-id">
-                                <table id="attendance_table" class="table table-striped table-bordered" style="width:100%">
+<!--                                 <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Mark <span class='label label-default'>No Attendance</span> as 
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a><span class='label label-success'>Present</span></a></a></li>
+                                            <li><a><span class='label label-warning'>Tardy</span></a></li>
+                                            <li><a><span class='label label-danger'>Unexcused</span></a></li>
+                                            <li><a><span class='label label-primary'>Excused</span></a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr> -->
+                                <table id="view_attendance_table" class="table table-striped table-bordered" style="width:100%">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>#</th>
-                                            <th>Date & Time</th>
-                                            <th>Name</th>
-                                            <th>Section</th>
+                                            <th>Student ID</th>
+                                            <th>Student Name</th>
+                                            <th>Attendance ID</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($attendance_records as $rows) : ?>
+                                        <?php foreach ($attendance as $rows) : ?>
                                             <tr>
-                                                <td><?php echo $rows['id']; ?></td>
-                                                <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
-                                                <td><?php echo $rows['name']; ?></td>
-                                                <td><?php echo $rows['section']; ?></td>
+                                                <td><?php echo $rows['student_id']; ?></td>
+                                                <td><?php echo $rows['student_name']; ?></td>
+                                                <td><?php echo $rows['attendance_id']; ?></td>
                                                 <td>
                                                     <?php 
-                                                        switch ($rows['remarks']) {
+                                                        switch ($rows['remark']) {
                                                             case "Tardy":
                                                                 echo "<span class='label label-warning'>Tardy</span>";
                                                                 break;
@@ -195,17 +146,28 @@
                                                             case "Present":
                                                                 echo "<span class='label label-success'>Present</span>";
                                                                 break;
+                                                            default:
+                                                                echo "<span class='label label-default'>No Attendance</span>";
+                                                                break;
                                                         }
                                                     ?>
-                                                </td>                                                
+                                                </td>
+                                                <?php if ($rows['remark'] === null) : ?>
                                                 <td><div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-warning" aria-label="Left Align" data-toggle="modal" data-target="#edit-attendance-modal">
-                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                                    </button>
-                                                    <button id="delete-action" type="button" class="btn btn-danger" aria-label="Right Align" data-toggle="modal" data-target="#delete-attendance-modal">
-                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                    </button>
-                                                </div></td>
+                                                        <button type="button" class="btn btn-success" aria-label="Left Align" data-toggle="modal" data-target="#add-attendance-modal">
+                                                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                                                        </button>
+                                                    </div></td>
+                                                <?php else : ?>
+                                                    <td><div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-warning" aria-label="Left Align" data-toggle="modal" data-target="#edit-attendance-modal">
+                                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                        </button>
+                                                        <button id="delete-action" type="button" class="btn btn-danger" aria-label="Right Align" data-toggle="modal" data-target="#delete-attendance-modal">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                        </button>
+                                                    </div></td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
