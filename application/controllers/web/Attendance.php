@@ -93,6 +93,48 @@ class Attendance extends CI_Controller {
 
     }
 
+    public function mark_attendance()
+    {
+        $student_ids = $this->input->post('student_ids');
+        $remark = $this->input->post('remark');
+        $date = $this->input->post('date');
+        
+        if (!isset($student_ids, $remark, $date)) {
+            echo "Error";
+        } else {
+            for ($i=0; $i < count($student_ids); $i++) {
+                $student_id = $student_ids[$i];
+                $this->load->model('student_model');
+                $student_data = $this->student_model->get(array('id' => $student_id));
+
+                //Get Qrcode
+                $qrcode_con['returnType'] = 'single';
+                $qrcode_con['conditions'] = array(
+                    'student_id' => $student_id
+                );
+
+                $this->load->model('qrcode_model');
+                $qrcode_data = $this->qrcode_model->get($qrcode_con);
+            
+                $insert_result = $this->attendance_model->insert(
+                    array(
+                        'qr_code' => $qrcode_data['qr_code'],
+                        'date' => date('Y-m-d H:i:s', strtotime($date)),
+                        'status' => "",
+                        'remarks' => $remark
+                    )
+                );
+                if (!$insert_result) {
+                    echo "Error";
+                    break;
+                }
+            }
+            //No Error
+            echo "Success";
+        }
+    
+    }
+
     public function new_attendance()
     {
 

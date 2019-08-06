@@ -104,6 +104,27 @@
     </div>
   </div>
 </div>
+
+<!-- Confirm Mark Attendance Modal -->
+<div class="modal fade" id="confirm-mark-attendance-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Confirm Submit</h4>
+      </div>
+      <div class="modal-body">
+        <label id="confirm-mark-attendance-label"></label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="mark-attendance-delete-btn" type="button" class="btn btn-danger">Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
     $(document).ready( function () {
         var attendanceTable = $('#view_attendance_table').DataTable(
@@ -114,8 +135,9 @@
                     { "width": "20%", "targets": 4 },
                     { "width": "15%", "targets": 3 },
                     { "width": "20%", "targets": 2 },
+                    { "width": "14%", "targets": 0 },
                     {
-                        "targets": [ 2, 0 ],
+                        "targets": [ 2 ],
                         "visible": false
                     }
                 ],
@@ -124,6 +146,7 @@
             }
         );
 
+ 
         //get Selected row id
         $('#view_attendance_table tbody').on( 'click', 'tr', function () {
             var selectedRow = attendanceTable.row( this ).data();
@@ -135,6 +158,71 @@
             $("#text_editRemark").val(remark);
         } );
 
+
+        var ids = [];
+
+        // Find indexes of rows which have `Yes` in the second column
+        var indexes = attendanceTable.rows().eq( 0 ).filter( function (rowIdx) {
+            var remark = $($.parseHTML(attendanceTable.cell( rowIdx, 3 ).data())).text();
+            var studentId = attendanceTable.cell( rowIdx, 0).data();
+
+            if (remark === "No Attendance") {
+                ids.push(studentId);
+                return true;
+            } else {
+                return false;
+            }
+        } );
+
+
+        $("#mark-attendance-form").submit(function(e) {
+            var selectedRemark = $("#selected-remark").val();
+            if (selectedRemark === "Select Remark") {
+                e.preventDefault();
+                $("#mark-attendance-form-status").removeClass("hide");
+            } else if (ids.length === 0) {
+                e.preventDefault();
+                alert("There's nothing to mark.\nPlease try again");
+            } else {
+                e.preventDefault();
+                $("#mark-attendance-form-status").addClass("hide");
+                var attendanceDate = "<?php echo $attendance_date; ?>";
+                // var proceed = confirm("Mark All No Attendance as " + selectedRemark + "?");
+                $('#confirm-mark-attendance-modal').modal('show');
+                $("#confirm-mark-attendance-label").text("Mark All No Attendance as " + selectedRemark);
+
+                $("#mark-attendance-delete-btn").click(function(e) {
+                    var formData = {
+                        student_ids: ids,
+                        remark: selectedRemark,
+                        date: attendanceDate
+                    };
+                    console.log(formData);
+                    //Start Ajax
+                    $.ajax({
+                        url: "<?php echo site_url("attendance/mark"); ?>    ",
+                        type: 'POST',
+                        data: formData,
+                        success: function(msg) {
+                            if (msg == 'Success') {
+                                alert("Attendance Marked Successfully!");
+                                //Clear Form
+                                $('#selected-remark').val("Select Remark");
+                            setTimeout(function(){// wait for 300 milliseconds
+                                location.reload(); // then reload the page.
+                            }, 1000); 
+                        } else if (msg == 'Error') {
+                            alert("Error Mark Attendance. Please Try Again");
+                            //Clear Form
+                            $('#selected-remark').val("Select Remark");
+                        } else {
+                            alert(msg);
+                        }
+                        }
+                    });
+                });
+            }
+        });
     } );
 
     //Add Attendance

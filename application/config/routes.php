@@ -42,6 +42,7 @@ $route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
 $route['attendance/new'] = 'web/attendance/new_attendance';
 $route['attendance/(:num)/edit'] = 'web/attendance/edit_attendance/$1';
 $route['attendance/(:num)/delete'] = 'web/attendance/remove_attendance/$1';
+$route['attendance/mark'] = 'web/attendance/mark_attendance';
 $route['dashboard/attendance/view'] = 'web/attendance/view_attendance';
 
 //Render Qrcodes Routes
