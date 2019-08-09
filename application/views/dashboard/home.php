@@ -97,28 +97,18 @@
                             <h3 class="panel-title">Overview</h3>
                         </div>
                         <div class="panel-body">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="well dash-box">
                                     <h2><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> <?php echo $section_count; ?> </h2>
-                                    <h4>Sections</h4>
+                                    <h4>Total Number of Sections</h4>
+                                    <p><a href="<?php echo site_url('dashboard/section'); ?>">View All Sections</a></p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="well dash-box">
                                     <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo $student_count; ?> </h2>
-                                    <h4>Students</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="well dash-box">
-                                    <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 0 </h2>
-                                    <h4>Label</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="well dash-box">
-                                    <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 0 </h2>
-                                    <h4>Label</h4>
+                                    <h4>Total Number of Students</h4>
+                                    <p><a href="<?php echo site_url('dashboard/student'); ?>">View All Students</a></p>
                                 </div>
                             </div>
                         </div>
@@ -131,10 +121,11 @@
                         <div class="chart-container">
                             <canvas id="attendance-chartcanvas"></canvas>
                         </div>
+                        <p><i><b>Note:</b> Late is equal to tardy & Absent are equals to excused and unexcused</i></p>
                     </div>
-                    <div class="panel-footer"><small>Generated as of <?php  echo date('h:i:s A'); ?></small></div>
+                    <div class="panel-footer"><small>Updated as of <?php  echo date('h:i:s A'); ?></small></div>
                 </div>
-                <div class="row">
+<!--                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading clearfix">
@@ -177,7 +168,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <!-- /Overview -->
         </div>

@@ -135,12 +135,7 @@
                 </div>
                 <div class="form-group">
                   <label for="">Date</label>
-                    <div class='input-group date view-date-picker' id='edit-attendance-dp'>
-                            <input type='text' name="date" class="form-control" placeholder="YYYY-MM-DD" id="view-date" required/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                      </div>
+                    <input type='text' name="date" class="form-control" placeholder="YYYY-MM-DD" id="view-date" required/>
                 </div>
                 
       </div>
@@ -449,5 +444,13 @@
 
       }
     });
-
+    $('#view-date').daterangepicker({
+      locale: {
+          format: 'YYYY-MM-DD'
+      },
+      singleDatePicker: true,
+      showDropdowns: true,
+      minYear: 1901,
+      maxYear: parseInt(moment().format('YYYY'),10)
+    }, null);
 </script>
