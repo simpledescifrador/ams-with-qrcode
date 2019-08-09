@@ -194,9 +194,55 @@ class Dashboard extends CI_Controller{
                     $this->load->view('dashboard/footers/attendance_footer', $data);
                     break;
                 case 'recitation':
+                    $this->load->model('section_model');
+                    $this->load->model('student_model');
+                    $this->load->model('qrcode_model');
+                    $this->load->model('recitation_model');
+                    $sections = $this->section_model->get();
+                    $data['sections'] = $sections;
+                    
+                    $recitation_records = $this->recitation_model->get();
+                    $recent_recitation = $this->recitation_model->recent_recitations();
+
+                    if ($recent_recitation) {
+                        foreach ($recent_recitation as $key => $value) {
+                            $data['recent_recitations'][$key]['id'] = $value['recitation_id'];
+                            $data['recent_recitations'][$key]['date'] = $value['date'];
+
+                            $qrcode_details = $this->qrcode_model->get(array('id' => $value['qr_code']));
+                            $student_details = $this->student_model->get(array('id' => $qrcode_details['student_id']));
+                            $section_details = $this->section_model->get(array('id' => $student_details['section_id']));
+
+                            $data['recent_recitations'][$key]['student_id'] = $qrcode_details['student_id'];
+                            $data['recent_recitations'][$key]['name'] = $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'];
+                            $data['recent_recitations'][$key]['section'] = $section_details['name'];
+                        }
+                    } else {
+                        $data['recent_recitation'] = array();
+                    }
+                    
+
+                    if ($recitation_records) {
+                        foreach ($recitation_records as $key => $value) {
+                            $data['recitation_records'][$key]['id'] = $value['recitation_id'];
+                            $data['recitation_records'][$key]['date'] = $value['date'];
+
+                            $qrcode_details = $this->qrcode_model->get(array('id' => $value['qr_code']));
+                            $student_details = $this->student_model->get(array('id' => $qrcode_details['student_id']));
+                            $section_details = $this->section_model->get(array('id' => $student_details['section_id']));
+
+                            $data['recitation_records'][$key]['student_id'] = $qrcode_details['student_id'];
+                            $data['recitation_records'][$key]['name'] = $student_details['first_name'] . " " . $student_details['middle_name'] . " " . $student_details['last_name'];
+                            $data['recitation_records'][$key]['section'] = $section_details['name'];
+                        }
+                    } else {
+                        $data['recitation_records'] = array();
+                    }
+                    
+
                     //Show dashboard View
                     $this->load->view('dashboard/header', $data);
-                    $this->load->view('dashboard/recitation', $data);   
+                    $this->load->view('dashboard/recitation', $data); 
                     $this->load->view('dashboard/footers/dashboard_footer');
                     $this->load->view('dashboard/footers/recitation_footer', $data);
                     break;

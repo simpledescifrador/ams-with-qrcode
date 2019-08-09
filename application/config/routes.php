@@ -48,6 +48,12 @@ $route['attendance/mark'] = 'web/attendance/mark_attendance';
 $route['dashboard/attendance/view'] = 'web/attendance/view_attendance';
 $route['dashboard/generate/attendance'] = 'web/attendance/generate_attendance';
 
+//Recitation Controller Routes
+$route['recitations/new'] = 'web/recitation/new_recitation';
+$route['recitations/(:num)/edit'] = 'web/recitation/edit_recitation/$1';
+$route['recitations/(:num)/delete'] = 'web/recitation/remove_recitation/$1';
+$route['dashboard/generate/recitation'] = 'web/recitation/generate_report';
+
 //Render Qrcodes Routes
 $route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$1';
 

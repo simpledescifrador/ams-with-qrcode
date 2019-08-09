@@ -16,7 +16,7 @@
                         <li><a href="<?php echo base_url() ;?>dashboard/section">Sections</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/student">Students</a></li>
                         <li><a href="<?php echo base_url() ;?>dashboard/attendance">Attendance</a></li> 
-                        <li class="active"><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li>
+                        <li class="active"><a href="<?php echo base_url() ;?>dashboard/recitation">Recitation</a></li> 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Welcome <?php echo $username; ?>!</a></li>
@@ -30,7 +30,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-11">
-                        <h2><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard <Small>Recitation Record</Small></h1>
+                        <h2><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard <Small><?php echo $sub_title; ?></Small></h1>
                     </div>
                     <div class="col-md-1">
                         <div class="dropdown settings">
@@ -51,7 +51,8 @@
             <div class="container">
                 <ol class="breadcrumb">
                     <li><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
-                    <li class="active">Recitation</li>
+                    <li>Recitation</li>
+                    <li class="active"><?php echo $sub_title; ?></li>
                 </ol>
             </div>
         </section>
@@ -77,99 +78,97 @@
                             </a>
                             <a href="<?php echo base_url() ;?>dashboard/attendance" class="list-group-item">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
-                                    Attendance
+                                    Attendance  
                             </a>
                             <a href="<?php echo base_url() ;?>dashboard/recitation" class="list-group-item active main-color-bg">
                                 <span class="glyphicon glyphicon-education" aria-hidden="true"></span> 
-                                    Recitation
+                                    Recitation <small> -  <?php echo $sub_title; ?></small>
                             </a>
                         </div>
                     </div>
                     <!-- /Sdie Nav -->
                     <!-- Overview -->
-                    <div>
-                        <div class="col-md-2">
-                            <a href="#" class="list-group-item main-color-bg" data-toggle="modal"  data-target="#generate-report-modal">
-                                <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                                 Generate Report
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-9"><br/> 
-                        <div class="panel panel-success">
+                    <?php if ($report_type == 1) : ?>
+                        <div class="col-md-9">
+                            <h3><?php echo $heading; ?></h3>
+                            <hr>
+                            <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Recent Added Recitation <small>(Last 5 records)</small></h3>
+                                <h3 class="panel-title">Recitation Report<span style="display: block;float: right;"><b>Date: </b></b><?php echo date('F j, Y', strtotime($date_range[0])); ?> to <?php echo date('F j, Y', strtotime($date_range[1])); ?></span></h3>
                             </div>
                             <div class="panel-body">
-                                <table id="recent_recitation_table" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date & Time</th>
-                                            <th>Student Name</th>
-                                            <th>Section</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (isset($recent_recitations)) : ?>
-                                            <?php foreach ($recent_recitations as $rows) : ?>
+                                <div id="buttons1" ><b>Export: </b></div><br>
+                                <table id="s_recitation_report_table" class="table table-striped table-bordered" style="width:100%">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>No. of Recitations</th>
+                                            </tr>
+                                        </thead>
+                                        <?php if (!empty($s_recitation_data)) : ?>
+                                            <tfoot style="background: lightblue;">
                                                 <tr>
-                                                    <td><?php echo $rows['id']; ?></td>
-                                                    <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
-                                                    <td><?php echo $rows['name']; ?></td>
-                                                    <td><?php echo $rows['section']; ?></td>
+                                                    <td></td>
+                                                    <td align="right"><b>Total:</b></td>
+                                                    <td><?php echo $total_recitations; ?></td>
+                                                </tr>
+                                            </tfoot>
+                                        <?php endif; ?>
+                                        <tbody>
+                                            <?php foreach ($s_recitation_data as $index => $rows) : ?>
+                                                <tr>
+                                                    <td><?php echo $index+1; ?></td>
+                                                    <td><?php echo $rows['date']; ?></td>
+                                                    <td><?php echo $rows['recitations']; ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                            </div>
                             </div>
                         </div>
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading clearfix">
-                                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Recitation Records</h4>
-                                <div class="btn-group pull-right">
-                                <a class="btn btn-success outline" data-toggle="modal" data-target="#add-recitation-modal">Add Recitation</a>
-                                </div>
+                    <?php else : ?>
+                        <div class="col-md-9">
+                            <h3><?php echo $heading; ?></h3>
+                            <hr>
+                            <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Recitation Report<span style="display: block;float: right;"><b>Date: </b></b><?php echo date('F j, Y', strtotime($date_range[0])); ?> to <?php echo date('F j, Y', strtotime($date_range[1])); ?></span></h3>
                             </div>
                             <div class="panel-body">
-                                <input type="text" class="hidden" id="selected-id">
-                                <input type="text" class="hidden" id="student-id">
-                                <table id="recitation_records_table" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date & Time</th>
-                                            <th>Student Name</th>
-                                            <th>Section</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (isset($recitation_records)) : ?>
-                                            <?php foreach ($recitation_records as $rows) : ?>
+                                <div id="buttons" ><b>Export: </b></div><br>
+                                <table id="recitation_report_table" class="table table-striped table-bordered" style="width:100%">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Student Name</th>
+                                                <th>No. of Recitations</th>
+                                            </tr>
+                                        </thead>
+                                        <?php if (!empty($recitation_data)) : ?>
+                                            <tfoot style="background: lightblue;">
                                                 <tr>
-                                                    <td><?php echo $rows['id']; ?></td>
-                                                    <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A");?></td>
-                                                    <td><?php echo $rows['name']; ?></td>
-                                                    <td><?php echo $rows['section']; ?></td>
-                                                    <td><div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-warning" aria-label="Left Align" data-toggle="modal" data-target="#edit-recitation-modal">
-                                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button id="delete-action" type="button" class="btn btn-danger" aria-label="Right Align" data-toggle="modal" data-target="#delete-recitation-modal">
-                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div></td>
+                                                    <td></td>
+                                                    <td align="right"><b>Total:</b></td>
+                                                    <td><?php echo $total_recitations; ?></td>
+                                                </tr>
+                                            </tfoot>
+                                        <?php endif; ?>
+                                        <tbody>
+                                            <?php foreach ($recitation_data as $index => $rows) : ?>
+                                                <tr>
+                                                    <td><?php echo $index+1; ?></td>
+                                                    <td><?php echo $rows['student_name']; ?></td>
+                                                    <td><?php echo $rows['recitations']; ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                            </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                     <!-- /Overview -->
                 </div>
             </div>
