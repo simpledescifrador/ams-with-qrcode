@@ -95,7 +95,7 @@
                             </a>
                         </div>
                         <div class="col-md-2">
-                            <a href="#" class="list-group-item main-color-bg" data-toggle="modal"  data-target="#mark-attendance-modal">
+                            <a href="#" class="list-group-item main-color-bg" data-toggle="modal"  data-target="#generate-report-modal">
                                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                                  Generate Report
                             </a>

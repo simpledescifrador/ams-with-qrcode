@@ -39,6 +39,9 @@
 <script src="<?php echo base_url() ;?>assets/js/jquery.min.js"></script>
 <!-- Moment JS -->
 <script src="<?php echo base_url() ;?>assets/js/moment.min.js"></script>
+<!-- Daterangepicker js -->
+<script src="<?php echo base_url() ;?>assets/js/daterangepicker.js"></script>
+<!-- Datatables -->
 <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/DataTables-1.10.18/js/dataTables.button.min.js"></script>

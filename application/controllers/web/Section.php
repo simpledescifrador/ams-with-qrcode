@@ -168,4 +168,29 @@ class Section extends CI_Controller{
         }
         
     }
+
+    public function get_section_students($section_id)
+    {
+        $con['conditions'] = array(
+            'section_id' => $section_id
+        );
+        
+        $this->load->model('student_model');
+        
+        $students = $this->student_model->get($con);
+        $data = array();
+        if ($students) {
+            foreach ($students as $key => $value) {
+                $data[$key] = array(
+                    'id' => $value['student_id'],
+                    'name' => $value['last_name'] . ", " . $value['first_name'] . " " . $value['middle_name']
+                );
+            }
+
+            echo json_encode($data);
+        } else {
+            echo json_encode($data); //No Students
+        }
+        
+    }
 }

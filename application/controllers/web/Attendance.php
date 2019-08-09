@@ -10,6 +10,166 @@ class Attendance extends CI_Controller {
         date_default_timezone_set('Asia/Manila');
     }
 
+    public function generate_attendance()
+    {
+        $report_type = $this->input->get('report');
+        
+
+        $data['title'] = ucfirst("Attendance Reports | Attendance Monitoring System");
+        $data['sub_title'] = "Reports";
+        $data['username'] = ucfirst($this->session->userdata['logged_in']['username']);
+
+
+        $this->load->model('student_model');
+        $this->load->model('qrcode_model');
+        $this->load->model('attendance_model');
+        $this->load->model('section_model');
+
+        $present = 0;
+        $tardy = 0;
+        $excused = 0;
+        $unexcused = 0;
+        
+        $data['report_type'] = $report_type;
+        
+        function dateSort($a, $b) {
+            return strtotime($a["date"]) - strtotime($b["date"]);
+        }
+
+
+        switch ($report_type) {
+            case 1: /* Student Report */
+                $section_id = $this->input->get('section');
+                $student_id = $this->input->get('student');
+                $date = $this->input->get('date');
+                $date_range = explode(" - ", $date);
+
+                //Get Student Data
+                $student_data = $this->student_model->get(array('id' => $student_id));
+
+                $student_name = $student_data['last_name'] . ", " . $student_data['first_name'] . " " . $student_data['middle_name'];
+                
+
+                //Panel Title to Data
+                $data['date_range'] = $date_range;
+                $data['heading'] = $student_name;
+
+    
+                //Get Qrcode
+                $qrcode_con['returnType'] = 'single';
+                $qrcode_con['conditions'] = array(
+                    'student_id' => $student_id
+                );
+
+                $qrcode_data = $this->qrcode_model->get($qrcode_con);
+
+                $start_date = $date_range[0] . " 00:00:00";
+                $end_date = $date_range[1] . " 00:00:00";
+
+                //Get Attendance
+                $attendance_con['conditions'] = array(
+                    'qr_code' => $qrcode_data['qr_code'],
+                    'date >=' => $start_date,
+                    'date <' => $end_date
+                );
+
+                $attendance_data = $this->attendance_model->get($attendance_con);
+   
+            
+                if ($attendance_data) {
+                    usort($attendance_data, "dateSort");
+
+                    foreach ($attendance_data as $key => $value) {
+                        $date = $value['date'];
+                        $remark = $value['remarks'];
+
+                        $data['s_attendance_data'][$key]['date'] =  date('Y-m-d', strtotime($date));
+
+                        $data['s_attendance_data'][$key]['remark'] = $remark;
+                    }
+
+
+                } else {
+                    
+                    $data['attendance_data'] = array();
+                }
+
+                $data['present'] = $present;
+                $data['tardy'] = $tardy;
+                $data['excused'] = $excused;
+                $data['unexcused'] = $unexcused;
+
+                break;
+            case 2: /* Section Report */
+
+                $section_id = $this->input->get('section');
+                $date = $this->input->get('date');
+                $date_range = explode(" - ", $date);
+
+                $section_data = $this->section_model->get(array('id' => $section_id));
+                //Panel Title to Data
+                $data['date_range'] = $date_range;
+                $data['heading'] = "Section " . $section_data['name'];
+
+                $start_date = $date_range[0] . " 00:00:00";
+                $end_date = $date_range[1] . " 00:00:00";
+
+                $attendance_con['conditions'] = array(
+                    'section_id' => $section_id,
+                    'date >=' => $start_date,
+                    'date <' => $end_date
+                );
+
+                $attendance_data = $this->attendance_model->get_attendance($attendance_con);
+                $data['attendance_data'] = array();
+                if ($attendance_data) {
+                    $k = 0;
+                    usort($attendance_data, "dateSort");
+
+                    foreach ($attendance_data as $key => $value) {
+                        $date = date('Y-m-d', strtotime($value['date']));
+                        $remark = $value['remarks'];
+                        
+                        $prev_date;
+                        if (!isset($data['attendance_data'][$k][strtolower($remark)])) {
+                            $data['attendance_data'][$k][strtolower($remark)] = 0;
+                        }
+
+                        if (!isset($prev_date)) {
+                            $data['attendance_data'][$k]['date'] = $date;
+                            $data['attendance_data'][$k][strtolower($remark)] =  $data['attendance_data'][$k][strtolower($remark)] + 1;
+                            $prev_date = $date;
+                        } else {
+                            if ($prev_date === $date) {
+                                $data['attendance_data'][$k][strtolower($remark)] = $data['attendance_data'][$k][strtolower($remark)] + 1;
+                            } else {
+                                $k++;
+                                $data['attendance_data'][$k]['date'] = $date;
+                                $data['attendance_data'][$k][strtolower($remark)] = (isset($data['attendance_data'][$k][strtolower($remark)]))? $data['attendance_data'][$key][strtolower($remark)] + 1 : 1;
+                            }
+
+                            $prev_date = $date;
+                        }
+
+                            ${strtolower($remark)} = ${strtolower($remark)} + 1; /* Increment Totals */
+
+                    }
+                }
+                
+                $data['present'] = $present;
+                $data['tardy'] = $tardy;
+                $data['excused'] = $excused;
+                $data['unexcused'] = $unexcused;
+
+                break;
+        }
+
+        $this->load->view('dashboard/header', $data);
+        $this->load->view('dashboard/attendance_report', $data);
+        $this->load->view('dashboard/footers/dashboard_footer');
+        $this->load->view('dashboard/footers/attendance_report_footer', $data);
+    }
+
     public function view_attendance()
     {
         $section_id = $this->input->get('section-id');

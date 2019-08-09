@@ -12,7 +12,7 @@ class Report_generator extends CI_Controller{
         parent::__construct();
         $this->load->library('pdf');
     }
-    
+
 
     public function monthly_section_attendance($section_id)
     {

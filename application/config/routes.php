@@ -31,6 +31,7 @@ $route['sections/new'] = 'web/section/new_section';
 $route['sections/(:num)/edit'] = 'web/section/edit_section_details/$1';
 $route['sections/(:num)/delete'] = 'web/section/remove_section/$1';
 $route['dashboard/sections/(:num)'] = 'web/section/view_section_details/$1';
+$route['sections/(:num)/students'] = 'web/section/get_section_students/$1';
 
 //Student Controller Routes
 $route['students/new'] = 'web/student/new_student';
@@ -38,12 +39,14 @@ $route['students/(:num)/edit'] = 'web/student/edit_student_details/$1';
 $route['students/(:num)/delete'] = 'web/student/remove_student/$1';
 $route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
 
+
 //Attendance Controller Routes
 $route['attendance/new'] = 'web/attendance/new_attendance';
 $route['attendance/(:num)/edit'] = 'web/attendance/edit_attendance/$1';
 $route['attendance/(:num)/delete'] = 'web/attendance/remove_attendance/$1';
 $route['attendance/mark'] = 'web/attendance/mark_attendance';
 $route['dashboard/attendance/view'] = 'web/attendance/view_attendance';
+$route['dashboard/generate/attendance'] = 'web/attendance/generate_attendance';
 
 //Render Qrcodes Routes
 $route['qrcodes/students/(:num)'] = 'web/render_qrcode/generate_student_qrcode/$1';

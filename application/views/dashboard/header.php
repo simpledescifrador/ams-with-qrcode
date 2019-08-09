@@ -17,7 +17,8 @@
 
         <!-- Chart JS Defult css -->
         <?php echo link_tag("assets/vendor/chartjs/css/default.css"); ?>
-
+        <!-- Daterangepicker Defult css -->
+        <?php echo link_tag("assets/css/daterangepicker.css"); ?>
         <title><?php echo $title; ?></title>
     </head>
 
