@@ -9,6 +9,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 /* ---------- API ROUTES ---------------*/
 $route['api/v1/attendance/add']['post'] = 'api/attendance_api/add_attendance';
+$route['api/v1/recitation/add']['post'] = 'api/recitation/add_recitation';
 $route['api/v1/qrcode/(:any)/status']['get'] = 'api/attendance_api/check_qrcode_status/$1';
 
 /* ---------- WEB ROUTES ---------------*/
