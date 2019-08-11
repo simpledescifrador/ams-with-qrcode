@@ -92,7 +92,7 @@
                         <div class="col-md-9">
                             <h3><?php echo $heading; ?></h3>
                             <hr>
-                            <div class="panel panel-default">
+                            <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Attendance Report<span style="display: block;float: right;"><b>Date: </b></b><?php echo date('F j, Y', strtotime($date_range[0])); ?> to <?php echo date('F j, Y', strtotime($date_range[1])); ?></span></h3>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="col-md-9">
                             <h3><?php echo $heading; ?></h3>
                             <hr>
-                            <div class="panel panel-default">
+                            <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Attendance Report<span style="display: block;float: right;"><b>Date: </b></b><?php echo date('F j, Y', strtotime($date_range[0])); ?> to <?php echo date('F j, Y', strtotime($date_range[1])); ?></span></h3>
                             </div>

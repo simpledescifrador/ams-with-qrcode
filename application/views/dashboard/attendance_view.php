@@ -89,7 +89,7 @@
                     <!-- /Sdie Nav -->
                     <!-- Overview -->
                     <div class="col-md-9">
-                        <div class="panel panel-default">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title pull-left"><?php echo $panel_title; ?></h3>
                                 <h3 class="panel-title pull-right"><?php echo date_format(date_create($attendance_date), "D, M d, Y"); ?></h3>

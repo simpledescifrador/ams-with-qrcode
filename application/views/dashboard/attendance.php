@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="col-md-9"><br/> 
-                        <div class="panel panel-default">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Recently Added Attendance <small>(Last 5 records)</small></h3>
                             </div>
