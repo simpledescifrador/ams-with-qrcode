@@ -29,8 +29,11 @@
         <header id="header">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-11">
-                        <h2><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard <Small>Recitation Record</Small></h1>
+                <div class="col-md-5">
+                        <h2>Dashboard <Small>Recitation Records</Small></h2>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="live-time"></h1>
                     </div>
                     <div class="col-md-1">
                         <div class="dropdown settings">

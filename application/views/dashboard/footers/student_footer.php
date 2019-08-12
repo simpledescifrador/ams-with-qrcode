@@ -14,13 +14,6 @@
                         <img id="student-profile-img" src="" width="200" style="display:none;" /> <br />
                         <small>*Optional</small>
                         <input type="file" id="student-profile-image" name="profile-image"accept="image/*">
-                        <a id="use-webcam" class="help-block">Click here to use WebCam</a>
-                        <div class="web-cam" hidden>
-                            <br>
-                            <div id="my_camera"></div>
-                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                            <div id="results" ></div>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="fnameStudent">First Name</label>

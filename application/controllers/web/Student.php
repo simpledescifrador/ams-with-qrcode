@@ -9,6 +9,41 @@ class Student extends CI_Controller{
         $this->load->model('student_model'); //Load Student Model
     }
 
+    public function change_image($student_id)
+    {
+        if(isset($_FILES['change-image']['name'])) {
+            if (!is_dir('uploads/students/profile/')) {
+                mkdir("uploads/students/profile/", 0777);
+            }
+
+            $config['upload_path'] = './uploads/students/profile/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $this->load->library('upload', $config);
+
+            $image = "";
+
+            if (!$this->upload->do_upload('change-image')) {
+                $image = base_url() . 'assets/images/student_profile_placeholder.png';
+            } else {
+                $data = $this->upload->data();
+                $image = base_url() . 'uploads/students/profile/' . $data['file_name'];
+            }
+
+            //Prepare the student data
+            $student_data = array(
+                'profile_image_url' => $image
+            );
+            //Insert new Student
+            $result = $this->student_model->update($student_data, $student_id);
+
+            if (!$result) {
+                echo 'Error';
+            } else {
+                echo 'Success';
+            }
+        } 
+    }
+
     public function new_student()
     {
         $this->load->library('form_validation'); //Load Form Validation
@@ -37,31 +72,33 @@ class Student extends CI_Controller{
                 $config['upload_path'] = './uploads/students/profile/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
                 $this->load->library('upload', $config);
+
+                $image = "";
+
                 if (!$this->upload->do_upload('profile-image')) {
-                    echo $this->upload->display_errors();
+                    $image = base_url() . 'assets/images/student_profile_placeholder.png';
                 } else {
                     $data = $this->upload->data();
-                    //Prepare the student data
-                    $student_data = array(
-                        'first_name' => $fname,
-                        'middle_name' => $mname,
-                        'last_name' => $lname,
-                        'section_id' => $section_id,
-                        'profile_image_url' => base_url() . 'uploads/students/profile/' . $data['file_name']
-                    );
-                    //Insert new Student
-                    $result = $this->student_model->insert($student_data);
-
-                    if (!$result) {
-                        echo 'Error';
-                    } else {
-                        echo 'Success';
-                    }
+                    $image = base_url() . 'uploads/students/profile/' . $data['file_name'];
                 }
-                
-            }
 
-            
+                //Prepare the student data
+                $student_data = array(
+                    'first_name' => $fname,
+                    'middle_name' => $mname,
+                    'last_name' => $lname,
+                    'section_id' => $section_id,
+                    'profile_image_url' => $image
+                );
+                //Insert new Student
+                $result = $this->student_model->insert($student_data);
+
+                if (!$result) {
+                    echo 'Error';
+                } else {
+                    echo 'Success';
+                }
+            }
         }
     }
 

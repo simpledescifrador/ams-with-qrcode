@@ -92,19 +92,19 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-3">
-                                <a id="generate-section-qrcode-anchor" class="list-group-item" data-toggle="modal"  data-target="#section-qrcode-modal">
+                                <a id="generate-section-qrcode-anchor" class="list-group-item list-group-item-success" data-toggle="modal"  data-target="#section-qrcode-modal">
                                     <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                      Print QR Code's
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a id="edit_section_anchor" href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-section-modal">
+                                <a id="edit_section_anchor" href="#" class="list-group-item list-group-item-warning" data-toggle="modal"  data-target="#edit-section-modal">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                      Edit
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#remove-section-modal">
+                                <a href="#" class="list-group-item list-group-item-danger" data-toggle="modal"  data-target="#remove-section-modal">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                      Remove
                                 </a>

@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="section-name">Name</label>
                         <input type="text" class="form-control" id="text_section" name="section" value="<?php echo $section_details['section']; ?>">
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top:5px;">
                         <label for="schoolYear">School Year</label>
                         <select class="form-control" id="text_schoolYear" name="school_year">
                             <option>Select School Year</option>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="edit-section" type="button" class="btn btn-primary" >Edit Section</button>
+                    <button id="edit-section" type="button" class="btn btn-warning" >Edit Section</button>
                 </div>
             </div>
         </form>
@@ -72,11 +72,10 @@
                 </div>
                 <div class="modal-body">
                     <label>Are you sure you wanna remove this section?</label>
-                    <label><small>NOTE: Removing a section will also remove students enrolled in it.</small></label>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id="remove-section" type="button" class="btn btn-primary">Yes</button>
+                    <button id="remove-section" type="button" class="btn btn-danger">Yes</button>
                 </div>
         </form>
         </div>

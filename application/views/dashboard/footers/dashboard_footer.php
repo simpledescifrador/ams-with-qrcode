@@ -35,6 +35,8 @@
     </div>
 </div>
 
+
+
 <!-- Bootstrap core JavaScript--> 
 <script src="<?php echo base_url() ;?>assets/js/jquery.min.js"></script>
 <!-- Moment JS -->
@@ -54,6 +56,10 @@
 
 <script src="<?php echo base_url() ;?>assets/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Default Dashboard JS -->
+<script src="<?php echo base_url() ;?>assets/js/dashboard/default.js"></script>
+
 <script type="text/javascript">
     /* Change Password AJAX */
     $('#change-password').click(function() {

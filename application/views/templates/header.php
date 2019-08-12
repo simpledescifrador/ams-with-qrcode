@@ -8,6 +8,7 @@
 	    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/primary.css">
-	    <title><?php echo $title; ?></title>
+		<title><?php echo $title; ?></title>
+		<?php echo link_tag('favicon.png', 'shortcut icon', 'image/png'); ?>
 	  </head>
 <body>

@@ -39,6 +39,7 @@ $route['students/new'] = 'web/student/new_student';
 $route['students/(:num)/edit'] = 'web/student/edit_student_details/$1';
 $route['students/(:num)/delete'] = 'web/student/remove_student/$1';
 $route['dashboard/students/(:num)'] = 'web/student/view_student_profile/$1';
+$route['students/(:num)/edit/image'] = 'web/student/change_image/$1';
 
 
 //Attendance Controller Routes

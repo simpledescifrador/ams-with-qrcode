@@ -1,5 +1,5 @@
 body {
-  background: url(../images/apple_book.jpg) no-repeat center center fixed; 
+  background-color: #3498db; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -30,8 +30,8 @@ body {
 	border: 0px solid #000;
 	padding-bottom: 50px;
 	padding-top: 20px;
-	padding-left: 60px;
-	padding-right: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
 	margin-top: 15vh;
 	margin-right: 20px;
 	margin-left: 20px;
@@ -53,10 +53,8 @@ hr.line-title{
 }
 
 .center-text{
-	margin-bottom: -15px;
-	display: block;
-    text-align: center;
-	size: 18px;
+    display: block;
+    margin: 0 auto;
 }
 
 .btn-gradient{

@@ -92,19 +92,19 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#student-qrcode-modal">
+                                <a href="#" class="list-group-item list-group-item-success" data-toggle="modal"  data-target="#student-qrcode-modal">
                                     <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                      Generate Qr Code
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a id="edit-student-anchor" href="#" class="list-group-item" data-toggle="modal"  data-target="#edit-student-modal">
+                                <a id="edit-student-anchor" href="#" class="list-group-item list-group-item-warning" data-toggle="modal"  data-target="#edit-student-modal">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                      Edit
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="list-group-item" data-toggle="modal"  data-target="#remove-student-modal">
+                                <a href="#" class="list-group-item list-group-item-danger" data-toggle="modal"  data-target="#remove-student-modal">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                      Remove
                                 </a>
@@ -113,12 +113,29 @@
                         <br /><hr />
                         <div class="row">
                             <div class="col-md-4">
+                                <div class="profile-pic">
                                 <?php if(!empty($student_details['profile_image_url'])):?>
-                                    <img src="<?php echo $student_details['profile_image_url']; ?>" class="img-responsive img-rounded" alt="profile picture">
+                                    <a href="<?php echo $student_details['profile_image_url']; ?>" class="thumbnail" target="_blank">
+                                    <img src="<?php echo $student_details['profile_image_url']; ?>" class="img-responsive img-rounded student-profile" alt="profile picture">
                                 <?php else: ?>
-                                    <img src="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="img-responsive img-rounded" alt="profile picture">
+                                    <a href="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="thumbnail" target="_blank">>
+                                    <img src="<?php echo base_url(); ?>assets/images/student_profile_placeholder.png" class="img-responsive img-rounded student-profile" alt="profile picture">
                                 <?php endif; ?>
-
+                                </a>
+                                <div class="edit"><a href="" id="change-student-profile"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;Click here to edit</a></div>
+                                </div>
+                                <form id="change-image-form" enctype="multipart/form-data" method="post" action="<?php echo base_url(); ?>students/<?php echo $student_details['student_id']; ?>/edit/image">
+                                    <div id="change-image-browse" class="hide">
+                                        <label for="change-image">Select a file to upload</label>
+                                        <input type="file" name="change-image" id="change-image" style="display: none;" accept="image/*" /><br>
+                                        <input type="button" name="change-image" value="Browse..." onclick="document.getElementById('change-image').click();" />
+                                    </div>
+                                    <br>
+                                    <div id="change-image-buttons"class="hide">
+                                        <button id="apply-change"type="submit" class="btn btn-success btn-sm ">Apply</button>
+                                        <button id="cancel-change" type="button" class="btn btn-danger btn-sm ">Cancel</button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-md-8"><br />
                                 <div class="form-group">
@@ -160,10 +177,31 @@
                                                     <tr>
                                                         <td><?php echo $rows['id'];?></td>
                                                         <td><?php echo date_format(date_create($rows['date']), "D, M d, Y h:i A"); ?></td>
-                                                        <td><?php echo $rows['remarks']; ?></td>
+                                                        <td>
+                                                            <?php 
+                                                                switch ($rows['remarks']) {
+                                                                    case "Tardy":
+                                                                        echo "<span class='label label-warning'>Tardy</span>";
+                                                                        break;
+                                                                    case "Unexcused":
+                                                                        echo "<span class='label label-danger'>Unexcused</span>";
+                                                                        break;
+                                                                    case "Excused":
+                                                                        echo "<span class='label label-primary'>Excused</span>";
+                                                                        break;
+                                                                    case "Present":
+                                                                        echo "<span class='label label-success'>Present</span>";
+                                                                        break;
+                                                                }
+                                                            ?>
+                                                        </td> 
                                                         <td><div class="btn-group" role="group">
-                                                            <button id=""type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-attendance-modal">Edit</button>
-                                                            <button id="delete-action" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-attendance-modal">Delete</button>
+                                                            <button type="button" class="btn btn-warning" aria-label="Left Align" data-toggle="modal" data-target="#edit-attendance-modal">
+                                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                            </button>
+                                                            <button id="delete-action" type="button" class="btn btn-danger" aria-label="Right Align" data-toggle="modal" data-target="#delete-attendance-modal">
+                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                            </button>
                                                         </div></td>
                                                     </tr>
                                                 <?php endforeach; ?>

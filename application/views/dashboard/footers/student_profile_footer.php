@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="edit-student" type="button" class="btn btn-primary">Edit Student</button>
+                    <button id="edit-student" type="button" class="btn btn-warning">Edit Student</button>
                 </div>
         </form>
         </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id="remove-student" type="submit" class="btn btn-primary">Yes</button>
+                    <button id="remove-student" type="submit" class="btn btn-danger">Yes</button>
                 </div>
         </form>
         </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button id="generate-student-qrcode-btn" type="button" class="btn btn-primary">Generate QR Code</button>
+                    <button id="generate-student-qrcode-btn" type="button" class="btn btn-success">Generate QR Code</button>
                     <button id="student-qrcode-print" type="button" class="btn btn-primary disabled">Print</button>
                 </div>
         </form>
@@ -220,6 +220,12 @@
   </div>
 </div>
 <script type="text/javascript">
+
+    $("#student-profile-image").change(function(event) {
+        var tmppath = URL.createObjectURL(event.target.files[0]);
+        $("#student-profile-img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+    });
+
     $(document).ready( function () {
         var attendanceTable = $('#student-attendance-table').DataTable(
             {
@@ -236,7 +242,8 @@
             var selectedRow = attendanceTable.row( this ).data();
             $("#selected-id").val(selectedRow[0]);
             $("#edit-date").val(selectedRow[1]);
-            $("#text_editRemark").val(selectedRow[2]);
+            var remark = $($.parseHTML(selectedRow[2])).text();
+            $("#text_editRemark").val(remark);
         } );
 
     } );
@@ -444,5 +451,54 @@
             }
         });
         return ;
+    });
+
+    $("#change-student-profile").click(function(e) {
+        e.preventDefault();
+        $("#change-image-browse").removeClass("hide");
+        $(".edit").addClass("hide");
+    });
+
+    $("#change-image").change(function(event) {
+        var tmppath = URL.createObjectURL(event.target.files[0]);
+        $(".student-profile").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+        $("#change-image-buttons").removeClass("hide");
+        $(".thumbnail").attr("href", URL.createObjectURL(event.target.files[0]));
+    });
+
+    $("#cancel-change").click(function() {
+        <?php if(!empty($student_details['profile_image_url'])):?>
+            var image = "<?php echo $student_details['profile_image_url']; ?>";
+        <?php else: ?>
+            var image = "<?php echo base_url(); ?>assets/images/student_profile_placeholder.png";
+        <?php endif; ?>
+        $(".student-profile").attr("src",image);
+        $(".edit").removeClass("hide");
+        $("#change-image-browse").addClass("hide");
+        $("#change-image-buttons").addClass("hide");
+        $(".thumbnail").attr("href", image);
+    });
+
+    $("#change-image-form").on("submit", function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: "POST",
+            data: new FormData(this),
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: function(msg) {
+                if (msg == 'Success') {
+                    setTimeout(function(){
+                        location.reload(); // then reload the page.
+                    }, 200); 
+                } else if (msg == 'Error') {
+                    alert("Error in changing student image.");
+                } else {
+                    alert(msg);
+                }
+            }
+        });
     });
 </script>
